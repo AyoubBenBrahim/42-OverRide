@@ -1,4 +1,3 @@
 ```
-mkdir level{00..09}
-for i in {00..09}; do touch level09/{flag,source,walkthrough.md}; done
+for i in {00..09}; do mkdir level$i/Ressources && touch level$i/Ressources/assembly.md && touch level$i/{flag,source,walkthrough.md}; done
 ```
