@@ -171,7 +171,12 @@ level02@OverRide:~$ for ((i=1; i<=26; i++)); do (python -c "print '%$i\$p'" && e
 ```
 
 
+********notes
 
+echo "$i - %$i\$p": This command uses the echo command to print a string that includes the current value of i and a format specifier (%$i\$p) that specifies the position of the argument to be printed by the printf function. The $i syntax refers to the current value of the loop variable i, and the backslash before the $ character is used to escape it so that it is interpreted as a literal character.
+
+echo "0x756e505234376848" | xxd -r -p
+This will pipe the string "0x756e505234376848" to the xxd command, which will convert it from hex to binary format. The -r option tells xxd to reverse the conversion process (from binary back to hex), and the -p option tells xxd to read the input as plain hexadecimal digits (without any whitespace or other formatting). The resulting binary data is then piped to the echo command, which will print it to the console as ASCII text.
 
 
 
