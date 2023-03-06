@@ -68,11 +68,26 @@ bomb: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically link
 0x0804952c  phase_defused
 ```
 
+```
+(gdb) disass phase_1
+Dump of assembler code for function phase_1:
+   0x08048b20 <+0>:	push   %ebp
+   0x08048b21 <+1>:	mov    %esp,%ebp
+   0x08048b23 <+3>:	sub    $0x8,%esp
+   0x08048b26 <+6>:	mov    0x8(%ebp),%eax
+   0x08048b29 <+9>:	add    $0xfffffff8,%esp
+   0x08048b2c <+12>:	push   $0x80497c0
 
 
+ x/s 0x80497c0
+0x80497c0:	 "Public speaking is very easy."
 
-
-
+laurie@BornToSecHackMe:~$ echo "Public speaking is very easy." > phase_1
+laurie@BornToSecHackMe:~$ ./bomb phase_1
+Welcome this is my little bomb !!!! You have 6 stages with
+only one life good luck !! Have a nice day!
+Phase 1 defused. How about the next one?
+```
 
 
 
