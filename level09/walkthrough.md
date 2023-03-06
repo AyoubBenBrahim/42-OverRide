@@ -89,5 +89,30 @@ only one life good luck !! Have a nice day!
 Phase 1 defused. How about the next one?
 ```
 
+```
+(gdb) disass phase_2
+
+   0x08048b50 <+8>:	mov    0x8(%ebp),%edx
+   0x08048b56 <+14>:	lea    -0x18(%ebp),%eax
+   0x08048b59 <+17>:	push   %eax
+   0x08048b5a <+18>:	push   %edx
+   0x08048b5b <+19>:	call   0x8048fd8 <read_six_numbers>
+   0x08048b60 <+24>:	add    $0x10,%esp
+   0x08048b63 <+27>:	cmpl   $0x1,-0x18(%ebp)
+
+ prepare the parameters to call the function read_six_numbers, which reads six integers from standard input and stores them in an array. The first parameter is the address of the local variable just loaded into the eax register, and the second parameter is the value in the edx register, which is the first parameter passed to the function.
+
+The instruction cmpl $0x1,-0x18(%ebp) is comparing the value at memory address %ebp-0x18 with 0x1. This value is one of the parameters passed to the function read_six_numbers.
+
+Therefore, this instruction is actually comparing the first parameter passed to read_six_numbers with the value 0x1.
+```
+
+```
+for (int i = 1; i <= 5; i++) {
+        if (tab_six[i+1] != (i+1) * tab_six[i]) {
+            explode_bomb();
+        }
+``` 
+
 
 
