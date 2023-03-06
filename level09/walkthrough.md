@@ -1,5 +1,5 @@
 
-
+```
 nmap 10.12.100.0/24
 
 Nmap scan report for 10.12.100.12
@@ -16,3 +16,6 @@ PORT    STATE SERVICE
 
 ssh laurie@10.12.100.12
 330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4
+```
+
+`for IP in 10.12.100.{12..20} ; do ssh -o ConnectTimeout=3 laurie@$IP ; done`
