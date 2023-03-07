@@ -18,8 +18,16 @@ ssh laurie@10.12.100.12
 330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4
 ```
 
-`for IP in 10.12.100.{12..20} ; do ssh -o ConnectTimeout=3 laurie@$IP ; done`
+`for IP in 10.12.100.{12..20} ; do ssh -o ConnectTimeout=1 laurie@$IP ; done`
 
+too slow
+
+use three ranges, each in a separate terminal
+```
+for IP in 10.12.100.{1..50} ; do ssh -o ConnectTimeout=1 -o NumberOfPasswordPrompts=1 laurie@$IP ; done
+for IP in 10.12.100.{50..100} ; do ssh -o ConnectTimeout=1 -o NumberOfPasswordPrompts=1 laurie@$IP ; done
+for IP in 10.12.100.{100..200} ; do ssh -o ConnectTimeout=1 -o NumberOfPasswordPrompts=1 laurie@$IP ; done
+```
 ```
 laurie@BornToSecHackMe:~$ ls
 bomb  README
@@ -35,7 +43,6 @@ P
 o
 4
 
-NO SPACE IN THE PASSWORD (password is case sensitive).
 laurie@BornToSecHackMe:~$ file bomb
 bomb: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.0.0, not stripped
 ```
@@ -68,6 +75,38 @@ bomb: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically link
 0x0804952c  phase_defused
 ```
 
+```
+main()
+{
+  initialize_bomb();
+  printf("Welcome this is my little bomb !!!! You have 6 stages with\n");
+  printf("only one life good luck !! Have a nice day!\n");
+  uVar1 = read_line();
+  phase_1(uVar1);
+  phase_defused();
+  printf("Phase 1 defused. How about the next one?\n");
+  uVar1 = read_line();
+  phase_2(uVar1);
+  phase_defused();
+  printf("That\'s number 2.  Keep going!\n");
+  uVar1 = read_line();
+  phase_3(uVar1);
+  phase_defused();
+  printf("Halfway there!\n");
+  uVar1 = read_line();
+  phase_4(uVar1);
+  phase_defused();
+  printf("So you got that one.  Try this one.\n");
+  uVar1 = read_line();
+  phase_5(uVar1);
+  phase_defused();
+  printf("Good work!  On to the next...\n");
+  uVar1 = read_line();
+  phase_6(uVar1);
+  phase_defused();
+  return 0;
+}
+```
 ```
 (gdb) disass phase_1
 Dump of assembler code for function phase_1:
