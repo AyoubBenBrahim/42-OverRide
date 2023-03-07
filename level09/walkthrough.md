@@ -147,6 +147,13 @@ Therefore, this instruction is actually comparing the first parameter passed to 
 ```
 
 ```
+
+  iVar1 = 1;
+  do {
+    if (aiStack_20[iVar1 + 1] != (iVar1 + 1) * aiStack_20[iVar1]) {
+      explode_bomb();
+    }
+    
 for (int i = 1; i <= 5; i++) {
         if (tab_six[i+1] != (i+1) * tab_six[i]) {
             explode_bomb();
