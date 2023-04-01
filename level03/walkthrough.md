@@ -47,5 +47,28 @@ mov %eax,(%esp): Move the value in the eax register to the top of the stack.
 call 0x8048660 <decrypt>: Call the function at address 0x8048660, which is decrypt.
 ```
 
+```
+ 0x080488c1 <+103>:	call   0x8048530 <__isoc99_scanf@plt>
+ 0x080488c6 <+108>:	mov    0x1c(%esp),%eax
+ 0x080488ca <+112>:	movl   $0x1337d00d,0x4(%esp)
+ 0x080488d2 <+120>:	mov    %eax,(%esp)
+ 0x080488d5 <+123>:	call   0x8048747 <test>
+
+pwd input stored at $esp+0x1c
+
+test(pwd, 0x1337d00d)
+{
+   0x0804874d <+6>:	mov    0x8(%ebp),%eax         eax = pwd
+   0x08048750 <+9>:	mov    0xc(%ebp),%edx         
+   0x08048753 <+12>:	mov    %edx,%ecx              ecx = 322424845
+   0x08048755 <+14>:	sub    %eax,%ecx              result = pwd - 322424845
+   0x08048757 <+16>:	mov    %ecx,%eax
+   0x08048759 <+18>:	mov    %eax,-0xc(%ebp)
+   0x0804875c <+21>:	cmpl   $0x15,-0xc(%ebp)       (result > 21) ? jump test+259 : continue 
+   0x08048760 <+25>:	ja     0x804884a <test+259>
 
 
+}
+
+
+```
