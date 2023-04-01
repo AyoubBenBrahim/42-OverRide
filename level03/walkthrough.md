@@ -38,7 +38,8 @@ checking if the value at ebp-0xc is greater than 0x15, and if so, it jumps
 ```
 
 ```
-shl $0x2,%eax: Shift the bits of the value in the eax register to the left by 2 bits, which is equivalent to multiplying by 4.
+shl $0x2,%eax: Shift the bits of the value in the eax register to the left by 2 bits, 
+                                             which is equivalent to multiplying by 4.
 add $0x80489f0,%eax
 mov (%eax),%eax: Move the value stored at the address in the eax register to the eax register.
 jmp *%eax: Jump to the address stored in the eax register.
