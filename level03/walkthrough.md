@@ -61,7 +61,7 @@ test(pwd, 0x1337d00d)
    0x0804874d <+6>:	mov    0x8(%ebp),%eax         eax = pwd
    0x08048750 <+9>:	mov    0xc(%ebp),%edx         
    0x08048753 <+12>:	mov    %edx,%ecx              ecx = 322424845
-   0x08048755 <+14>:	sub    %eax,%ecx              result = pwd - 322424845
+   0x08048755 <+14>:	sub    %eax,%ecx              %ecx = %ecx - %eax              result = 322424845 - pwd
    0x08048757 <+16>:	mov    %ecx,%eax
    0x08048759 <+18>:	mov    %eax,-0xc(%ebp)
    0x0804875c <+21>:	cmpl   $0x15,-0xc(%ebp)       (result > 21) ? jump test+259 : continue 
