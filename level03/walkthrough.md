@@ -65,11 +65,16 @@ test(pwd, 0x1337d00d)
    0x08048755 <+14>:	sub    %eax,%ecx              %ecx = %ecx - %eax              result = 322424845 - pwd
    0x08048757 <+16>:	mov    %ecx,%eax
    0x08048759 <+18>:	mov    %eax,-0xc(%ebp)
-   0x0804875c <+21>:	cmpl   $0x15,-0xc(%ebp)       (result > 21) ? jump test+259 : continue 
+   0x0804875c <+21>:	cmpl   $0x15,-0xc(%ebp)       (result > 21) ? jump test+259 : continue
    0x08048760 <+25>:	ja     0x804884a <test+259>
-
-
+   
+   0x0804884a <+259>:	call   0x8048520 <rand@plt>
+   0x0804884f <+264>:	mov    %eax,(%esp)
+   0x08048852 <+267>:	call   0x8048660 <decrypt>
+   
+   
+   
 }
-
-
 ```
+
+this result is used as input to decrypt() otherwise rand() picks a random value
