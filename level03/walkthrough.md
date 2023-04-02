@@ -14,40 +14,6 @@ Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
 
 ```
 
-
-p 0x1337d00d - input = output
-
-test <+21>:	cmpl   $0x15,-0xc(%ebp) // output
-
-jump if above
-
-checking if the value at ebp-0xc is greater than 0x15, and if so, it jumps 
-
-
-```
-   0x0804875c <+21>:	cmpl   $0x15,-0xc(%ebp)
-   0x08048760 <+25>:	ja     0x804884a <test+259>
-   0x08048766 <+31>:	mov    -0xc(%ebp),%eax
-   0x08048769 <+34>:	shl    $0x2,%eax
-   0x0804876c <+37>:	add    $0x80489f0,%eax
-   0x08048771 <+42>:	mov    (%eax),%eax
-   0x08048773 <+44>:	jmp    *%eax
-   0x08048775 <+46>:	mov    -0xc(%ebp),%eax
-   0x08048778 <+49>:	mov    %eax,(%esp)
-   0x0804877b <+52>:	call   0x8048660 <decrypt>
-```
-
-```
-shl $0x2,%eax: Shift the bits of the value in the eax register to the left by 2 bits, 
-                                             which is equivalent to multiplying by 4.
-add $0x80489f0,%eax
-mov (%eax),%eax: Move the value stored at the address in the eax register to the eax register.
-jmp *%eax: Jump to the address stored in the eax register.
-mov -0xc(%ebp),%eax
-mov %eax,(%esp): Move the value in the eax register to the top of the stack.
-call 0x8048660 <decrypt>: Call the function at address 0x8048660, which is decrypt.
-```
-
 ```
  0x080488c1 <+103>:	call   0x8048530 <__isoc99_scanf@plt>
  0x080488c6 <+108>:	mov    0x1c(%esp),%eax
@@ -62,7 +28,7 @@ test(pwd, 0x1337d00d)
    0x0804874d <+6>:	mov    0x8(%ebp),%eax         eax = pwd
    0x08048750 <+9>:	mov    0xc(%ebp),%edx         
    0x08048753 <+12>:	mov    %edx,%ecx              ecx = 322424845
-   0x08048755 <+14>:	sub    %eax,%ecx              %ecx = %ecx - %eax              result = 322424845 - pwd
+   0x08048755 <+14>:	sub    %eax,%ecx              %ecx = %ecx - %eax     result = 322424845 - pwd
    0x08048757 <+16>:	mov    %ecx,%eax
    0x08048759 <+18>:	mov    %eax,-0xc(%ebp)
    0x0804875c <+21>:	cmpl   $0x15,-0xc(%ebp)       (result > 21) ? jump test+259 : continue
@@ -76,5 +42,28 @@ test(pwd, 0x1337d00d)
    
 }
 ```
+if it is < 21, this result is used as input to decrypt() otherwise rand() picks a random value
+ 
+ ```
+shl $0x2,%eax: Shift the bits of the value in the eax register to the left by 2 bits,
+                                             which is equivalent to multiplying by 4.
+add $0x80489f0,%eax
+mov (%eax),%eax: Move the value stored at the address in the eax register to the eax register.
+jmp *%eax: Jump to the address stored in the eax register.
+mov -0xc(%ebp),%eax
+mov %eax,(%esp): Move the value in the eax register to the top of the stack.
+call 0x8048660 <decrypt>: Call the function at address 0x8048660, which is decrypt.
+```
 
-this result is used as input to decrypt() otherwise rand() picks a random value
+```
+
+ <decrypt+19>:	movl   $0x757c7d51,-0x1d(%ebp)
+ <decrypt+26>:	movl   $0x67667360,-0x19(%ebp)
+ <decrypt+33>:	movl   $0x7b66737e,-0x15(%ebp)
+ <decrypt+40>:	movl   $0x33617c7d,-0x11(%ebp)
+
+online Hex to Text:
+517d7c75 + 60736667 + 7e73667b + 7d7c6133 = 517d7c75607366677e73667b7d7c6133 = "Q}|u`sfg~sf{}|a3"
+```
+
+
