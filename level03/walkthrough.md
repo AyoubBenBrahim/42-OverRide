@@ -64,6 +64,13 @@ call 0x8048660 <decrypt>: Call the function at address 0x8048660, which is decry
 
 online Hex to Text:
 517d7c75 + 60736667 + 7e73667b + 7d7c6133 = 517d7c75607366677e73667b7d7c6133 = "Q}|u`sfg~sf{}|a3"
+
+s=$(echo -n "0x757c7d51" | xxd -r -p | rev) && s+=$(echo -n "0x67667360" | xxd -r -p | rev) && s+=$(echo -n "0x7b66737e" | xxd -r -p | rev) && s+=$(echo -n "0x33617c7d" | xxd -r -p | rev) && echo $s
+
+Q}|u`sfg~sf{}|a3
+
+python -c "print '757c7d51'.decode('hex')[::-1] + '67667360'.decode('hex')[::-1] + '7b66737e'.decode('hex')[::-1] + '33617c7d'.decode('hex')[::-1]"
+  Q}|u`sfg~sf{}|a3
 ```
 
 
