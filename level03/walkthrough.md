@@ -79,7 +79,6 @@ eax            0x15	21
  ```
  
 call decrypt(result=ebp+8)
-
 {
 
 }
