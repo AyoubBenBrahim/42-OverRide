@@ -37,9 +37,6 @@ test(pwd, 0x1337d00d)
    0x0804884a <+259>:	call   0x8048520 <rand@plt>
    0x0804884f <+264>:	mov    %eax,(%esp)
    0x08048852 <+267>:	call   0x8048660 <decrypt>
-   
-   
-   
 }
 ```
 if it is < 21, this result is used as input to decrypt() otherwise rand() picks a random value
