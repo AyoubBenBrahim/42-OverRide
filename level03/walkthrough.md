@@ -110,9 +110,14 @@ python -c "print '757c7d51'.decode('hex')[::-1] + '67667360'.decode('hex')[::-1]
    0x080486f2 <decrypt+146>:	mov    $0x80489c3,%eax            "Congratulations!"
    0x080486f7 <decrypt+151>:	mov    $0x11,%ecx                // loads the value 0x11 into %ecx, which will be used as the length of the strings to be compared.
    0x080486fc <decrypt+156>:	mov    %edx,%esi                 // %esi is often used as a pointer to a source string.  ("Congratulations!")
-   0x080486fe <decrypt+158>:	mov    %eax,%edi
+   0x080486fe <decrypt+158>:	mov    %eax,%edi                 // %edi is often used as a pointer to a destination string. ("Q}|u`sfg~sf{}|a3")
    0x08048700 <decrypt+160>:	repz cmpsb %es:(%edi),%ds:(%esi)
   
+  
+  
+  test   %eax,%eax
+bitwise AND operation between it and itself.
+This is equivalent to checking whether the value in %eax is equal to 0.
 ```
 
 result = 322424845 - pwd
