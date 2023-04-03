@@ -11,7 +11,6 @@ Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
 0x08048660  decrypt
 0x08048747  test
 0x0804885a  main
-
 ```
 
 ```
