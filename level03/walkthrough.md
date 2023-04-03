@@ -44,22 +44,44 @@ test(pwd, 0x1337d00d)
 ```
 if it is < 21, this result is used as input to decrypt() otherwise rand() picks a random value
  
- ```
-shl $0x2,%eax: Shift the bits of the value in the eax register to the left by 2 bits,
-                                             which is equivalent to multiplying by 4.
-add $0x80489f0,%eax
-mov (%eax),%eax: Move the value stored at the address in the eax register to the eax register.
-jmp *%eax: Jump to the address stored in the eax register.
-mov -0xc(%ebp),%eax
-mov %eax,(%esp): Move the value in the eax register to the top of the stack.
-call 0x8048660 <decrypt>: Call the function at address 0x8048660, which is decrypt.
+
+the value stored at -0xc(%ebp)..
+
 ```
-the shl instruction does not modify the value stored at -0xc(%ebp)..
+ (gdb) p/d 0x1337d00d - 0x15 = 322424824
 
+ run 
+ 
+(gdb) ni
+=> 0x8048773 <test+44>:	jmp    *%eax
+   0x8048775 <test+46>:	mov    -0xc(%ebp),%eax
+   0x8048778 <test+49>:	mov    %eax,(%esp)
+   0x804877b <test+52>:	call   0x8048660 <decrypt>
 
+(gdb) i r
+eax            0x804883d	134514749
+ecx            0x15	21
+
+(gdb) x $eax
+   0x804883d <test+246>:	mov    -0xc(%ebp),%eax
+(gdb) ni
+=> 0x804883d <test+246>:	mov    -0xc(%ebp),%eax
+   0x8048840 <test+249>:	mov    %eax,(%esp)
+   0x8048843 <test+252>:	call   0x8048660 <decrypt>
+   0x8048848 <test+257>:	jmp    0x8048858 <test+273>
+   0x804884a <test+259>:	call   0x8048520 <rand@plt>
+   0x804884f <test+264>:	mov    %eax,(%esp)
+   0x8048852 <test+267>:	call   0x8048660 <decrypt>
+   0x8048858 <test+273>:	leave
+   
+(gdb) i r  $eax
+eax            0x15	21
+ ```
+ 
 call decrypt(result)
 
 ```
+xor    %eax,%eax   // sets the value of %eax to 0
 
  <decrypt+19>:	movl   $0x757c7d51,-0x1d(%ebp)
  <decrypt+26>:	movl   $0x67667360,-0x19(%ebp)
@@ -73,13 +95,33 @@ s=$(echo -n "0x757c7d51" | xxd -r -p | rev) && s+=$(echo -n "0x67667360" | xxd -
 
 python -c "print '757c7d51'.decode('hex')[::-1] + '67667360'.decode('hex')[::-1] + '7b66737e'.decode('hex')[::-1] + '33617c7d'.decode('hex')[::-1]"
   Q}|u`sfg~sf{}|a3
+  
+  
+=> 0x80486c7 <decrypt+103>:	lea    -0x1d(%ebp),%eax  //  start of the string "Q}|u`sfg~sf{}|a3"
+   0x80486ca <decrypt+106>:	add    -0x28(%ebp),%eax
+   0x80486cd <decrypt+109>:	movzbl (%eax),%eax
+   0x80486d0 <decrypt+112>:	mov    %eax,%edx
+   0x80486d2 <decrypt+114>:	mov    0x8(%ebp),%eax   // x/wd $ebp+8 = 0x15 = 21
+   0x80486d5 <decrypt+117>:	xor    %edx,%eax
+   
+   
+   0x080486ed <decrypt+141>:	lea    -0x1d(%ebp),%eax           "Q}|u`sfg~sf{}|a3"
+   0x080486f0 <decrypt+144>:	mov    %eax,%edx
+   0x080486f2 <decrypt+146>:	mov    $0x80489c3,%eax            "Congratulations!"
+   0x080486f7 <decrypt+151>:	mov    $0x11,%ecx                // loads the value 0x11 into %ecx, which will be used as the length of the strings to be compared.
+   0x080486fc <decrypt+156>:	mov    %edx,%esi                 // %esi is often used as a pointer to a source string.  ("Congratulations!")
+   0x080486fe <decrypt+158>:	mov    %eax,%edi
+   0x08048700 <decrypt+160>:	repz cmpsb %es:(%edi),%ds:(%esi)
+  
 ```
 
-pwd = 0x1337d00d - input = result
+result = 322424845 - pwd
 
 stored at -0xc(%ebp)
 
 "Q}|u`sfg~sf{}|a3" XOR each character with result
+ 
+ 
  
 "Q}|u`sfg~sf{}|a3" XOR result = "Congratulations!"
 
