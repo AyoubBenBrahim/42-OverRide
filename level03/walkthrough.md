@@ -71,10 +71,44 @@ online Hex to Text:
 
 s=$(echo -n "0x757c7d51" | xxd -r -p | rev) && s+=$(echo -n "0x67667360" | xxd -r -p | rev) && s+=$(echo -n "0x7b66737e" | xxd -r -p | rev) && s+=$(echo -n "0x33617c7d" | xxd -r -p | rev) && echo $s
 
-Q}|u`sfg~sf{}|a3
-
 python -c "print '757c7d51'.decode('hex')[::-1] + '67667360'.decode('hex')[::-1] + '7b66737e'.decode('hex')[::-1] + '33617c7d'.decode('hex')[::-1]"
   Q}|u`sfg~sf{}|a3
 ```
+
+pwd = 0x1337d00d - input = result
+
+stored at -0xc(%ebp)
+
+"Q}|u`sfg~sf{}|a3" XOR each character with result
+ 
+"Q}|u`sfg~sf{}|a3" XOR result = "Congratulations!"
+
+The XOR operation is commutative
+A XOR B = C <==> B = C XOR A = 
+
+so suficiant to say:
+
+```
+level03@OverRide:~$ python -c 'print ord("Q") ^ ord("C")'
+18
+level03@OverRide:~$ python -c 'print ord("}") ^ ord("o")'
+18
+level03@OverRide:~$ python -c 'print ord("|") ^ ord("n")'
+18
+
+our pwd is
+level03@OverRide:~$ python -c 'print '0x1337d00d' - 18'
+322424827
+```
+
+```
+level03@OverRide:~$ ./level03
+Password:322424827
+$ pwd
+/home/users/level03
+$ cat /home/users/level04/.pass
+kgv3tkEb9h2mLkRsPkXRfc2mHbjMxQzvb2FrgKkf
+```
+
 
 
