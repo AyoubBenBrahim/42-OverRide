@@ -43,7 +43,11 @@ if it is < 21, this result is used as input to decrypt() otherwise rand() picks 
 
 the value stored at -0xc(%ebp)..
 
+lets debug, 
+
 ```
+suppose
+
  (gdb) p/d 0x1337d00d - 0x15 = 322424824
 
  run 
@@ -74,7 +78,11 @@ ecx            0x15	21
 eax            0x15	21
  ```
  
-call decrypt(result)
+call decrypt(result=ebp+8)
+
+{
+
+}
 
 ```
 xor    %eax,%eax   // sets the value of %eax to 0
