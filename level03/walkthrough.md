@@ -96,6 +96,12 @@ s=$(echo -n "0x757c7d51" | xxd -r -p | rev) && s+=$(echo -n "0x67667360" | xxd -
 python -c "print '757c7d51'.decode('hex')[::-1] + '67667360'.decode('hex')[::-1] + '7b66737e'.decode('hex')[::-1] + '33617c7d'.decode('hex')[::-1]"
   Q}|u`sfg~sf{}|a3
   
+PS:
+we dont need all that, we only need the first chars/ start of the buffer:
+0x08048673 <decrypt+19>:	movl   $0x757c7d51,-0x1d(%ebp)
+➜  Desktop unhex 757c7d51 | rev ; echo
+Q}|u
+  
   
 => 0x80486c7 <decrypt+103>:	lea    -0x1d(%ebp),%eax  //  start of the string "Q}|u`sfg~sf{}|a3"
    0x80486ca <decrypt+106>:	add    -0x28(%ebp),%eax
@@ -118,6 +124,10 @@ python -c "print '757c7d51'.decode('hex')[::-1] + '67667360'.decode('hex')[::-1]
   test   %eax,%eax
 bitwise AND operation between it and itself.
 This is equivalent to checking whether the value in %eax is equal to 0.
+
+ 0x08048713 <decrypt+179>:	jne    0x8048723 <decrypt+195>
+ 0x08048715 <decrypt+181>:	movl   $0x80489d4,(%esp)
+ 0x0804871c <decrypt+188>:	call   0x80484e0 <system@plt>
 ```
 
 result = 322424845 - pwd
@@ -131,9 +141,10 @@ stored at -0xc(%ebp)
 "Q}|u`sfg~sf{}|a3" XOR result = "Congratulations!"
 
 The XOR operation is commutative
-A XOR B = C <==> B = C XOR A = 
 
-so suficiant to say:
+A XOR B = C <==> B = C XOR A 
+
+so its suficiant to say:
 
 ```
 level03@OverRide:~$ python -c 'print ord("Q") ^ ord("C")'
