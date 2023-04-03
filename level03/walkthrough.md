@@ -54,6 +54,10 @@ mov -0xc(%ebp),%eax
 mov %eax,(%esp): Move the value in the eax register to the top of the stack.
 call 0x8048660 <decrypt>: Call the function at address 0x8048660, which is decrypt.
 ```
+the shl instruction does not modify the value stored at -0xc(%ebp)..
+
+
+call decrypt(result)
 
 ```
 
