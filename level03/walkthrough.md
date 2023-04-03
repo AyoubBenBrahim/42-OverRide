@@ -101,7 +101,9 @@ python -c "print '757c7d51'.decode('hex')[::-1] + '67667360'.decode('hex')[::-1]
   
 PS:
 we dont need all that, we only need the first chars/ start of the buffer:
+
 0x08048673 <decrypt+19>:	movl   $0x757c7d51,-0x1d(%ebp)
+
 ➜  Desktop unhex 757c7d51 | rev ; echo
 Q}|u
   
