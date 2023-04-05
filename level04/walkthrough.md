@@ -20,6 +20,24 @@ run
 ```
 as u see the main parent process jumps directly to the prompt
 
+In GDB, ptrace is used to monitor and control the execution of the program being debugged. 
+GDB uses ptrace to set breakpoints, read and write memory, and control the execution of the program.
+
+When ptrace() is called, it allows the parent process to observe and control the execution of the child process.
+
+In the case of gdb, it calls fork() to create a child process, and then calls ptrace() on the child to observe and control its execution.
+This allows gdb to pause the execution of the child process, inspect its memory and registers, set breakpoints, and other debugging operations.
+
+One alternative to inferior command in GDB to trace the execution of forked child process is to use the set follow-fork-mode command.
+
+`By default, GDB stops the parent process when it encounters a fork call, and allows you to continue debugging the child process.` 
+
+The set follow-fork-mode command allows you to specify how GDB should handle the creation of a child process. You can set it to one of the following modes:
+
+parent: GDB will remain attached to the parent process after a fork, and will not automatically follow the child process.
+child: GDB will detach from the parent process and attach to the child process after a fork.
+ask: GDB will prompt you for which process to follow after a fork.
+
 
 (gdb) set follow-fork-mode child
 ```
