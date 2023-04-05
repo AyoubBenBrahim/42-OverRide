@@ -25,6 +25,12 @@ GDB uses ptrace to set breakpoints, read and write memory, and control the execu
 
 When ptrace() is called, it allows the parent process to observe and control the execution of the child process.
 
+When you start GDB, it attaches to the original process and suspends its execution.
+`When you issue the "run" command, GDB uses the "fork" system call to create a new process that runs the program being debugged.`
+The new process is identical to the original process, except that it is running in a different address space.
+
+Once the new process is created, GDB uses ptrace to control its execution.
+
 In the case of gdb, it calls fork() to create a child process, and then calls ptrace() on the child to observe and control its execution.
 This allows gdb to pause the execution of the child process, inspect its memory and registers, set breakpoints, and other debugging operations.
 
@@ -32,11 +38,12 @@ One alternative to inferior command in GDB to trace the execution of forked chil
 
 `By default, GDB stops the parent process when it encounters a fork call, and allows you to continue debugging the child process.` 
 
-The set follow-fork-mode command allows you to specify how GDB should handle the creation of a child process. You can set it to one of the following modes:
+The set follow-fork-mode command allows you to specify how GDB should handle the creation of a child process/forks.
+You can set it to one of the following modes:
 
-parent: GDB will remain attached to the parent process after a fork, and will not automatically follow the child process.
-child: GDB will detach from the parent process and attach to the child process after a fork.
-ask: GDB will prompt you for which process to follow after a fork.
+* parent: GDB will remain attached to the parent process after a fork, and will not automatically follow the child process.
+* child: GDB will detach from the parent process and attach to the child process after a fork.
+* ask: GDB will prompt you for which process to follow after a fork.
 
 
 (gdb) set follow-fork-mode child
