@@ -62,6 +62,29 @@ lets debug the assembly
    
 buffer of size 100 stored at esp + 0x28
 ```
+0x08048495 <+81>:	cmp    $0x40,%al
+
+0x080484a7 <+99>:	cmp    $0x5a,%al
+
+The code checks if the character is less than or equal to 0x40, which corresponds to '@' in ASCII,
+and if it is greater than 0x5a, which corresponds to 'Z' in ASCII. If the character is within this range,
+the code jumps to the main+135 address, which indicates that the input is invalid.
+
+ 0x080484cb <+135>:	addl   $0x1,0x8c(%esp)
+
+```
+A 0x41 65    XOR     32
+
+01000001 = 65 = A
+XOR
+00100000 = 32
+
+01100001 = 97 = a
+
+python3 -c "print(65 ^ 32)"
+97
+```
+
 
 
 
