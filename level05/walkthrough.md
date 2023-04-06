@@ -51,6 +51,17 @@ id 1>&2
 
 mmm smthg wrong
 
+lets debug the assembly
+
+```
+
+=> 0x8048466 <main+34>:	movl   $0x64,0x4(%esp)
+   0x804846e <main+42>:	lea    0x28(%esp),%eax
+   0x8048472 <main+46>:	mov    %eax,(%esp)
+   0x8048475 <main+49>:	call   0x8048350 <fgets@plt>
+   
+buffer of size 100 stored at esp + 0x28
+```
 
 
 
