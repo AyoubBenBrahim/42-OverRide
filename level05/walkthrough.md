@@ -73,13 +73,13 @@ the code jumps to the main+135 address, which indicates that the input is invali
  0x080484cb <+135>:	addl   $0x1,0x8c(%esp)
 
 ```
-A 0x41 65    XOR     32
+'A' 0x41 65    XOR     32
 
-01000001 = 65 = A
+01000001 = 65 = 'A'
 XOR
 00100000 = 32
 
-01100001 = 97 = a
+01100001 = 97 = 'a'
 
 python3 -c "print(65 ^ 32)"
 97
