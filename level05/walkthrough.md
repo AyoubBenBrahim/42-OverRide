@@ -28,9 +28,10 @@ lets jump into jdb
    its GOT obviously
 
 ```
-   (gdb) disass exit
-Dump of assembler code for function exit@plt:
-   0x08048370 <+0>:	jmp    *0x80497e0
+call   0x8048370 <exit@plt>
+
+(gdb) x 0x8048370
+   0x8048370 <exit@plt>:	jmp    *0x80497e0
 ```
 
 ```
