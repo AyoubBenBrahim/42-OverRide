@@ -6,6 +6,10 @@ level05@OverRide:~$ ./level05
 ssss
 ssss
 
+level05@OverRide:~$ ./level05
+AbCdE
+abcde
+
 obiously some format string here
 
 level05@OverRide:~$ ./level05
