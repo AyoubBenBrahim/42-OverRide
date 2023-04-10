@@ -30,7 +30,47 @@
     system("/bin/sh")
   }
   
+  =====
   
+  ebp-0xc = strlen(av1, 0x20)
+  cmpl   $0x5,-0xc(%ebp)
+  
+  if (len > 5)
+  {
+   0x08048796 <+78>:	movl   $0x0,0xc(%esp)
+   0x0804879e <+86>:	movl   $0x1,0x8(%esp)
+   0x080487a6 <+94>:	movl   $0x0,0x4(%esp)
+   0x080487ae <+102>:	movl   $0x0,(%esp)
+   
+    eax = ptrace(int request, pid_t pid, caddr_t addr, int data)
+    eax = ptrace(0, 0, 1, 0)
+    
+    if (eax == 0xffffffff)
+    {
+      puts "!! TAMPERING DETECTED !!"
+     
+      exit
+    }
+    else
+    {
+      res = av1[3]
+      
+      res = res XOR 0x1337
+      res = res + 0x5eeded
+      ebp-0x10 = res
+      ebp-0x14 = 0
+      
+      cmp    -0xc(%ebp),ebp-0x14
+      
+   0x0804885e <+278>:	cmp    -0xc(%ebp),%eax
+   0x08048861 <+281>:	jl     0x804880f <auth+199>
+      if (av2 > 0)
+      {
+      
+      }
+      
+    }
+  }
   
   
   
