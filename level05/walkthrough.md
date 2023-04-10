@@ -166,10 +166,7 @@ ni
 ```
 
 
-```
-
-#shell = 0xffffdea0
-
+```py
 import struct
 
 exit_addr = struct.pack ("I", 0x80497e0)
