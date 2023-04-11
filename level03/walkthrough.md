@@ -1,9 +1,9 @@
 
-```
+```bash
 ssh level03@10.12.100.228 -p 4242
 Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
 ```
-```
+```gdb
 (gdb) info func
 
 0x08048617  get_unum
@@ -13,7 +13,7 @@ Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
 0x0804885a  main
 ```
 
-```
+```asm
  0x080488c1 <+103>:	call   0x8048530 <__isoc99_scanf@plt>
  0x080488c6 <+108>:	mov    0x1c(%esp),%eax
  0x080488ca <+112>:	movl   $0x1337d00d,0x4(%esp)
@@ -45,7 +45,7 @@ the value stored at -0xc(%ebp)..
 
 lets debug, 
 
-```
+```py
 suppose
 
  (gdb) p/d 0x1337d00d - 0x15 = 322424824
@@ -83,7 +83,7 @@ call decrypt(result=ebp+8)
 
 }
 
-```
+```gdb
 xor    %eax,%eax   // sets the value of %eax to 0
 
  <decrypt+19>:	movl   $0x757c7d51,-0x1d(%ebp)
@@ -151,7 +151,7 @@ A XOR B = C <==> B = C XOR A
 
 so its suficiant to say:
 
-```
+```py
 level03@OverRide:~$ python -c 'print ord("Q") ^ ord("C")'
 18
 level03@OverRide:~$ python -c 'print ord("}") ^ ord("o")'
@@ -164,7 +164,7 @@ level03@OverRide:~$ python -c 'print '0x1337d00d' - 18'
 322424827
 ```
 
-```
+```py
 level03@OverRide:~$ ./level03
 Password:322424827
 $ pwd
