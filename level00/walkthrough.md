@@ -8,7 +8,7 @@ Password:
 
 i assume that there would be a cmp + jump instruction with the correct pwd
 
-```
+```asm
    0x080484e7 <+83>:	cmp    $0x149c,%eax
    0x080484ec <+88>:	jne    0x804850d <main+121>
    0x080484ee <+90>:	movl   $0x8048639,(%esp)
@@ -19,7 +19,7 @@ i assume that there would be a cmp + jump instruction with the correct pwd
 
 p/d 0x149c = 5276
 
-```
+```asm
 Password:5276
 
 Authenticated!
