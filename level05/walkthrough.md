@@ -76,7 +76,8 @@ buffer of size 100 stored at esp + 0x28
 0x080484a7 <+99>:	cmp    $0x5a,%al
 ```
 The code checks if the character is less than or equal to 0x40, which corresponds to '@' in ASCII,
-and if it is greater than 0x5a, which corresponds to 'Z' in ASCII. If the character is within this range,
+and if it is greater than 0x5a, which corresponds to 'Z' in ASCII.
+If the character is within this range,
 the code jumps to the main+135 address, which indicates that the input is invalid.
 
  0x080484cb <+135>:	addl   $0x1,0x8c(%esp)
@@ -125,6 +126,9 @@ exmpl:
 (gdb) p 0xffff - 0xdc59 = 9126
 ```
 
+As for the shellcode the while loop lower case the content of the buffer,
+so it prevents us from executing any shellcode that contains bytes which values range between 0x40 and 0x5a.
+we ll inject it in the env
 ```
 (gdb) x/900 $esp
 
