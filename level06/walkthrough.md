@@ -5,7 +5,7 @@
 0x08048879  main
 ```
 
-```
+```asm
  0x080488c2 <+73>:	mov    $0x8048b08,%eax           "-> Enter Login: "
  0x080488ca <+81>:	call   0x8048510 <printf@plt>
 
