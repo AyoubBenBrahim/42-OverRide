@@ -1,6 +1,6 @@
 
 fuzzing phase
-
+ p (char *) getenv("SHELLCODE"
 ```
 level05@OverRide:~$ ./level05
 ssss
