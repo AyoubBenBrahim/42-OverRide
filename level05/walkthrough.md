@@ -1,6 +1,6 @@
 
 fuzzing phase
- p (char *) getenv("SHELLCODE"
+
 ```
 level05@OverRide:~$ ./level05
 ssss
@@ -129,6 +129,12 @@ exmpl:
 As for the shellcode the while loop lower case the content of the buffer,
 so it prevents us from executing any shellcode that contains bytes which values range between 0x40 and 0x5a.
 we ll inject it in the env
+
+```
+(gdb) p (char *)(getenv("shellcode"))
+$5 = 0xffffddd6 
+```
+
 ```
 (gdb) x/900 $esp
 
