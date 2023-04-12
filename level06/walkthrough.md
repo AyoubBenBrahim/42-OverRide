@@ -54,11 +54,13 @@
       {
         res = av1[3]
       
-        res = res XOR 0x1337
-        res = res + 0x5eeded
-        ebp-0x10 = res
+        hash = hash XOR 0x1337
+        hash = hash + 0x5eeded
+        ebp-0x10 = hash
         ebp-0x14 = 0
     
+      int hash = (login[3] ^ 0x1337) + 0x5eeded
+
       
         <+278>:	cmp    -0xc(%ebp),ebp-0x14
         if (av2 > 0)
@@ -90,7 +92,29 @@
 
 
 ```
-...............
+well it does some other hashing thing with our hash stored at -0x10(%ebp)
+then comparse it with argv2 aka input serial
+
+ 0x08048863 <+283>:   mov    0xc(%ebp),%eax
+ 0x08048866 <+286>:   cmp    -0x10(%ebp),%eax
+ 
+ return (serial != hash);
+ 
+ ```
+ so the hash is already calculated by the program based on our input login
+ 
+ we only need to dig it out by gdb
+```
+first we need to bypass ptrace blocking
+
+   0x80487b5 <auth+109>:        call   0x80485f0 <ptrace@plt>
+=> 0x80487ba <auth+114>:        cmp    $0xffffffff,%eax
+   0x80487bd <auth+117>:        jne    0x80487ed <auth+165>
+
+(gdb) i r
+eax            0xffffffff  -1
+
+
 ```
 
 
