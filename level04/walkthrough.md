@@ -46,8 +46,9 @@ You can set it to one of the following modes:
 * ask: GDB will prompt you for which process to follow after a fork.
 
 
+```gdb
 (gdb) set follow-fork-mode child
-```
+
 => 0x80486d6 <main+14>:	call   0x8048550 <fork@plt>
    0x80486db <main+19>:	mov    %eax,0xac(%esp)
    
