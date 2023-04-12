@@ -31,23 +31,17 @@
   
   =====
   
-  ebp-0xc = strlen(av1, 0x20)
+  login_len = ebp-0xc = strlen(av1, 0x20)
   cmpl   $0x5,-0xc(%ebp)
   
-  if (len > 5)
+  if (login_len > 5)
   {
-      0x08048796 <+78>:	movl   $0x0,0xc(%esp)
-      0x0804879e <+86>:	movl   $0x1,0x8(%esp)
-      0x080487a6 <+94>:	movl   $0x0,0x4(%esp)
-      0x080487ae <+102>:	movl   $0x0,(%esp)
-   
       eax = ptrace(int request, pid_t pid, caddr_t addr, int data)
       eax = ptrace(0, 0, 1, 0)
     
       if (eax == 0xffffffff)
       {
         puts "!! TAMPERING DETECTED !!"
-     
         exit()
       }
       else
@@ -70,26 +64,15 @@
          <+208>:	cmp    $0x1f,%al   compares the least significant byte of the value in the EAX to 0x1f (31)
       
        }
-        else if (ebp + 0xc == ebp-0x10)
+        else if (ebp+0xc == ebp-0x10) // serial == hash
         {
            return 0;
         }
         else 
           return 1
-      
     }
   }
-  
-  
-  
-  
-  
-  
-  
-  
 ```
-
-
 
 ```
 well it does some other hashing thing with our hash stored at -0x10(%ebp)
@@ -114,14 +97,47 @@ first we need to bypass ptrace blocking
 (gdb) i r
 eax            0xffffffff  -1
 
+gdb> b *0x080487ba
+gdb> b *0x08048866    <+286>:   cmp    -0x10(%ebp),%eax
 
+(gdb) info break
+2       0x08048941 <main+200>  get login+serial
+
+4       0x080487ba <auth+114>  bypass ptrace
+5       0x08048866 <auth+286>  inspect hash
+
+run
+
+-> Enter Login: aybouras
+-> Enter Serial: serial
+
+(gdb) c
+Continuing.
+=> 0x80487ba <auth+114>:        cmp    $0xffffffff,%eax
+
+(gdb) set $eax=0
+(gdb) c
+Continuing.
+=> 0x8048866 <auth+286>:        cmp    -0x10(%ebp),%eax
+
+(gdb) x/s $ebp-0x10
+0xffffd698:      "m!_"
 ```
+ok, i forgot that scanf takes the serial as %u
+```py
 
+(gdb) x/wx $ebp-0x10
+0xffffd698:     0x005f216d
+(gdb) p 0x005f216d
+$19 = 6234477
 
-
-
-
-
+-> Enter Serial: 6234477
+Authenticated!
+$ pwd
+/home/users/level06
+$ cat /home/users/level07/.pass
+GbcPDRgsFK77LNnnuh7QyFYA2942Gp8yKj9KrWD8
+```
 
 
 
