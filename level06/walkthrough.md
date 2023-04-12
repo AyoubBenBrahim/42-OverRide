@@ -128,8 +128,12 @@ ok, i forgot that scanf takes the serial as %u
 
 (gdb) x/wx $ebp-0x10
 0xffffd698:     0x005f216d
-(gdb) p 0x005f216d
-$19 = 6234477
+(gdb) p 0x005f216d = 6234477
+
+or simply
+(gdb) p *(unsigned int *)($ebp-0x10)
+$4 = 6234477
+
 
 -> Enter Serial: 6234477
 Authenticated!
