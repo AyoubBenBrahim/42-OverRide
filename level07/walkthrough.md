@@ -94,6 +94,7 @@ store_number(array[100])
 }
 ```
 
+ a "magic number:" a number that lets you substitute speedy multiplication for pokey division, as if by magic.
 
 
 
