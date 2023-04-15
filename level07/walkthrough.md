@@ -70,7 +70,11 @@ Input command: store
 
 store_number(array[100])
 {
-
+  
+  Initialize two local variables with zeros.
+  <+6>:     movl   $0x0,-0x10(%ebp)
+  <+13>:    movl   $0x0,-0xc(%ebp)
+  
   <store_number+33>:	call   0x80485e7 <get_unum>
   <store_number+38>:	mov    %eax,-0x10(%ebp)
   
@@ -84,11 +88,31 @@ store_number(array[100])
   number at -0x10(%ebp)
   index  at -0xc(%ebp)
   
+  
+  Perform a division-by-3 check using multiplication by the magic number 0xaaaaaaab.
+  If the remainder is non-zero, skip the following block.
+  
   <store_number+65>:	mov    $0xaaaaaaab,%edx  (a repeating pattern of 10101010101010101010101010101011 in binary / 2863311531) Convert each hex digit to 4 binary digits 
   
   <store_number+72>:	mul    %edx   ==> eax = eax * edx
   <store_number+74>:	shr    %edx  right-shifting the value of edx by one     edx = edx >> 1
 
+If the division-by-3 check passed, check if the most significant byte of the first local variable is equal to 0xb7. If not, skip the following block.
+
+0x0804868a <+90>:    mov    -0x10(%ebp),%eax
+0x0804868d <+93>:    shr    $0x18,%eax
+0x08048690 <+96>:    cmp    $0xb7,%eax
+0x08048695 <+101>:   jne    0x80486c2 <store_number+146>
+
+
+If either of the checks failed, store the first local variable into an array pointed to by the first function argument, withan index specified by the second local variable. Set the return value to 0.
+
+0x080486c2 <+146>:   mov    -0xc(%ebp),%eax
+0x080486c5 <+149>:   shl    $0x2,%eax
+0x080486c8 <+152>:   add    0x8(%ebp),%eax
+0x080486cb <+155>:   mov    -0x10(%ebp),%edx
+0x080486ce <+158>:   mov    %edx,(%eax)
+0x080486d0 <+160>:   mov    $0x0,%eax
 
 
 }
