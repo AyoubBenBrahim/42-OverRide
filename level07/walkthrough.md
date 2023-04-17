@@ -31,7 +31,7 @@ $18 = 0xffffd8a2 "/home/users/level07/level07"
  
  The test instruction is commonly used to check whether a value is zero or not
  0x080488df <+444>:	test   %eax,%eax
- 0x080488e1 <+446>:	jne    0x80488f8 <main+469>         jump to compar if it is <+478>:	mov    $0x8048d61,%eax "read"
+ 0x080488e1 <+446>:	jne    0x80488f8 <main+469>         jump to compar if it is 0 <+478>:	mov    $0x8048d61,%eax "read"
  0x080488e3 <+448>:	lea    0x24(%esp),%eax
  0x080488ea <+455>:	call   0x8048630 <store_number>
  
@@ -92,8 +92,11 @@ store_number(array[100])
   Perform a division-by-3 check using multiplication by the magic number 0xaaaaaaab.
   If the remainder is non-zero, skip the following block.
   
-  <store_number+65>:	mov    $0xaaaaaaab,%edx  (a repeating pattern of 10101010101010101010101010101011 in binary / 2863311531) Convert each hex digit to 4 binary digits 
+  0xaaaaaaab,%edx  (a repeating pattern of 10101010101010101010101010101011 in binary / 2863311531)
+  Convert each hex digit to 4 binary digits
+  check for more [Ressources/magic_numbers.md](Ressources/magic_numbers.md)
   
+  <store_number+65>:	mov    $0xaaaaaaab,%edx 
   <store_number+72>:	mul    %edx   ==> eax = eax * edx
   <store_number+74>:	shr    %edx  right-shifting the value of edx by one     edx = edx >> 1
 
