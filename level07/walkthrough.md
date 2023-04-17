@@ -134,5 +134,31 @@ if (check1 == 0 || check2 == 0)
 }
 ```
 
+```
 
+(gdb) x/d $ebp-0x10     value
+0xffffd508:     123
+
+(gdb) x/d $ebp-0xc      index
+0xffffd50c:     7 
+ 
+(gdb) x/x $ebp+8        array_ptr
+0xffffd520:    ===> 0xffffd544
+
+
+(gdb) info frame
+  ebp at 0xffffd518, eip at 0xffffd51c
+
+
+ mov    -0xc(%ebp),%eax    eax = 7
+ shl    $0x2,%eax          eax = 7 * 4 = 28
+ add    0x8(%ebp),%eax     eax = 0xffffd544 + 28 = 0xffffd560
+ mov    -0x10(%ebp),%edx   edx = 123
+ mov    %edx,(%eax)        x/d 0xffffd560 = p  *(int *)0xffffd560 = 123
+ 
+ 
+ 
+ 
+ 
+```
 
