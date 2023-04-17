@@ -94,7 +94,7 @@ store_number(array[100])
   
   0xaaaaaaab,%edx  (a repeating pattern of 10101010101010101010101010101011 in binary / 2863311531)
   Convert each hex digit to 4 binary digits
-  check for more  <code>[Ressources/magic_numbers.md](Ressources/magic_numbers.md)</code>
+  check for more  [Ressources/magic_numbers.md]
   
   <store_number+65>:	mov    $0xaaaaaaab,%edx 
   <store_number+72>:	mul    %edx   ==> eax = eax * edx
@@ -110,13 +110,29 @@ If the division-by-3 check passed, check if the most significant byte of the fir
 
 If either of the checks failed, store the first local variable into an array pointed to by the first function argument, withan index specified by the second local variable. Set the return value to 0.
 
-0x080486c2 <+146>:   mov    -0xc(%ebp),%eax
-0x080486c5 <+149>:   shl    $0x2,%eax
-0x080486c8 <+152>:   add    0x8(%ebp),%eax
-0x080486cb <+155>:   mov    -0x10(%ebp),%edx
-0x080486ce <+158>:   mov    %edx,(%eax)
+0x080486c2 <+146>:   mov    -0xc(%ebp),%eax        index
+0x080486c5 <+149>:   shl    $0x2,%eax              index * 4
+0x080486c8 <+152>:   add    0x8(%ebp),%eax         &array + index
+0x080486cb <+155>:   mov    -0x10(%ebp),%edx       value
+0x080486ce <+158>:   mov    %edx,(%eax)            *(array + index) = value
 0x080486d0 <+160>:   mov    $0x0,%eax
 
 
 }
 </code></pre>
+
+  
+```
+if (check1 == 0 || check2 == 0) 
+{
+    int* array_ptr = *(int**)(ebp + 0x8);
+    int value = *(int *)(ebp - 0x10);
+    int index = *(int *)(ebp - 0xc);
+    *(array_ptr + (index * 4)) = value;  ==> array[index] = value
+    
+    return 0;
+}
+```
+
+
+
