@@ -60,9 +60,9 @@ this buffer is passed to store()
 ```
 
 debbugging
+check for more [Ressources/magic_numbers.md](Ressources/magic_numbers.md)
 
-
-```
+<pre><code>```gdb
 
 break at <main+351>:	call   0x80484a0 <fgets@plt>
 
@@ -94,7 +94,7 @@ store_number(array[100])
   
   0xaaaaaaab,%edx  (a repeating pattern of 10101010101010101010101010101011 in binary / 2863311531)
   Convert each hex digit to 4 binary digits
-  check for more `[Ressources/magic_numbers.md](Ressources/magic_numbers.md)`
+  check for more  <code>[Ressources/magic_numbers.md](Ressources/magic_numbers.md)</code>
   
   <store_number+65>:	mov    $0xaaaaaaab,%edx 
   <store_number+72>:	mul    %edx   ==> eax = eax * edx
@@ -119,4 +119,4 @@ If either of the checks failed, store the first local variable into an array poi
 
 
 }
-```
+```</code></pre>
