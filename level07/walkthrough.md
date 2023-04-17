@@ -62,7 +62,7 @@ this buffer is passed to store()
 debbugging
 check for more [Ressources/magic_numbers.md](Ressources/magic_numbers.md)
 
-<pre><code>```gdb
+<pre><code>
 
 break at <main+351>:	call   0x80484a0 <fgets@plt>
 
@@ -119,4 +119,4 @@ If either of the checks failed, store the first local variable into an array poi
 
 
 }
-```</code></pre>
+</code></pre>
