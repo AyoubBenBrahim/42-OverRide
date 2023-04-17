@@ -157,6 +157,7 @@ so We will overwrite the main return address using the store function.
 
 
 b *main+455  // store
+
 b *main+520  // read
 
 where the array_ptr is located when value retrieval
@@ -230,6 +231,7 @@ Input command: store
  Index: 116
 
 Input command: quit
+
 $ pwd
 /home/users/level07
 $ cat /home/users/level08/.pass
