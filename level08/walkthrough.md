@@ -14,9 +14,9 @@
 <+161>:	mov    -0xa0(%rbp),%rax
 <+168>:	add    $0x8,%rax
 
-<+175>:	mov    -0x88(%rbp),%rax   FILE_PTR
-<+182>:	mov    $0x400d96,%esi     "Starting back up: "
-<+190>:	callq  0x4008c4 <log_wrapper>    log_wrapper(FILE_PTR)
+<+175>:	mov    -0x88(%rbp),%rax         FILE_PTR
+<+182>:	mov    $0x400d96,%esi           "Starting back up: "
+<+190>:	callq  0x4008c4 <log_wrapper>   log_wrapper(FILE_PTR)
 
 
 
