@@ -6,7 +6,7 @@
 ```
  <+90>:	mov    $0x400d6b,%edx           "w"
  <+95>:	mov    $0x400d6d,%eax           "./backups/.log"  
- <+106>:	callq  0x4007c0 <fopen@plt>   FILE_PTR *fopen(const char *path, const char *mode);
+ <+106>:	callq  0x4007c0 <fopen@plt>   FILE_PTR *fopen("./backups/.log", "w")
  <+111>:	mov    %rax,-0x88(%rbp)       FILE_PTR
  
   <+118>:	cmpq   $0x0,-0x88(%rbp)      cmp(0, FILE_PTR)
