@@ -6,8 +6,8 @@
 ```
  <+90>:	mov    $0x400d6b,%edx           "w"
  <+95>:	mov    $0x400d6d,%eax           "./backups/.log"  
- <+106>:	callq  0x4007c0 <fopen@plt>   FILE_PTR *fopen("./backups/.log", "w")
- <+111>:	mov    %rax,-0x88(%rbp)       FILE_PTR
+ <+106>:	callq  0x4007c0 <fopen@plt>   log_PTR *fopen("./backups/.log", "w")
+ <+111>:	mov    %rax,-0x88(%rbp)       log_PTR
  
   <+118>:	cmpq   $0x0,-0x88(%rbp)      cmp(0, FILE_PTR)
   <+126>:	jne    0x400a91 <main+161>
@@ -25,9 +25,9 @@
 <+161>:	mov    -0xa0(%rbp),%rax         argv
 <+168>:	add    $0x8,%rax
 
-<+175>:	mov    -0x88(%rbp),%rax         FILE_PTR
+<+175>:	mov    -0x88(%rbp),%rax         log_PTR
 <+182>:	mov    $0x400d96,%esi           "Starting back up: "
-<+190>:	callq  0x4008c4 <log_wrapper>   log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
+<+190>:	callq  0x4008c4 <log_wrapper>   log_wrapper(log_PTR,  "Starting back up: ", argv1)
 ```
 ```
     <+195>:	mov    $0x400da9,%edx
@@ -36,8 +36,34 @@
     <+211>:	mov    (%rax),%rax
     <+214>:	mov    %rdx,%rsi
     <+217>:	mov    %rax,%rdi
-    <+220>:	callq  0x4007c0 <fopen@plt>
+    <+220>:	callq  0x4007c0 <fopen@plt>  input_file_PTR = fopen(argv1, "r")
+    <+225>:	mov    %rax,-0x80(%rbp)      input_file_PTR
 ```
+```
+    <+334>:	mov    -0xa8(%rbp),%rcx     the maximum number of characters to append
+    <+341>:	mov    %rdx,%rdi
+    <+344>:	repnz scas %es:(%rdi),%al
+    <+346>:	mov    %rcx,%rax            the maximum number of characters to append
+   
+   
+   
+    <+370>:	mov    -0xa0(%rbp),%rax       argv1
+    <+377>:	add    $0x8,%rax
+    <+381>:	mov    (%rax),%rax
+    <+384>:	mov    %rax,%rcx
+    <+387>:	lea    -0x70(%rbp),%rax         This variable will be used as the destination buffer for the strncat function
+    <+391>:	mov    %rcx,%rsi
+    <+394>:	mov    %rax,%rdi
+    <+397>:	callq  0x400750 <strncat@plt>   strncat(file, argv1, len(argv[1]))
+    
+    
+    the register %rcx is set to the number of bytes between the start of the string at -0x70(%rbp) and the first occurrence of the value 0xffffffffffffffff.
+    The code then subtracts this value from the constant 0x63 to determine the maximum length of the string that can be concatenated onto the input string.
+
+Finally, the code loads the address of the input string stored at -0xa0(%rbp) into %rax,
+and then uses the strncat function to concatenate the maximum allowed number of characters from the input string onto the end of the string stored at -0x70(%rbp).
+```
+
 ```
 log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
 {
