@@ -27,15 +27,40 @@
 
 <+175>:	mov    -0x88(%rbp),%rax         FILE_PTR
 <+182>:	mov    $0x400d96,%esi           "Starting back up: "
-<+190>:	callq  0x4008c4 <log_wrapper>   log_wrapper(FILE_PTR)
+<+190>:	callq  0x4008c4 <log_wrapper>   log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
 
-log_wrapper()
+log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
 {
+
+    <+11>:	mov    %rdi,-0x118(%rbp)   arg1
+    <+18>:	mov    %rsi,-0x120(%rbp)   arg2
+    <+25>:	mov    %rdx,-0x128(%rbp)   arg3
+    
     <+47>:	mov    -0x120(%rbp),%rdx
-    <+54>:	lea    -0x110(%rbp),%rax
+    <+54>:	lea    -0x110(%rbp),%rax  buffer1
     <+61>:	mov    %rdx,%rsi
     <+64>:	mov    %rax,%rdi
-    <+67>:	callq  0x4006f0 <strcpy@plt>   strcpy( -0x110(%rbp) , -0x120(%rbp) )
+    <+67>:	callq  0x4006f0 <strcpy@plt>   strcpy(buffer1 , arg2)
+    
+    
+    <+182>:	lea    -0x1(%rax),%rdx
+    <+186>:	lea    -0x110(%rbp),%rax
+    <+193>:	add    %rdx,%rax
+    <+196>:	mov    %rsi,%rdx
+    <+199>:	mov    %r8,%rsi
+    <+202>:	mov    %rax,%rdi
+    <+205>:	mov    $0x0,%eax
+    <+210>:	callq  0x400740 <snprintf@plt>   snprintf(buffer1, rsi, r8)
+    
+    
+    
+    <+243>:	mov    $0x400d4e,%ecx           "LOG: %s\n"
+    <+248>:	lea    -0x110(%rbp),%rdx
+    <+255>:	mov    -0x118(%rbp),%rax
+    <+262>:	mov    %rcx,%rsi
+    <+265>:	mov    %rax,%rdi
+    <+268>:	mov    $0x0,%eax
+    <+273>:	callq  0x4007a0 <fprintf@plt>   fprintf( -0x118(%rbp) , "LOG: %s\n" ,  buffer1)
 }
 
 
