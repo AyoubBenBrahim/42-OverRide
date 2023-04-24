@@ -28,7 +28,17 @@
 <+175>:	mov    -0x88(%rbp),%rax         FILE_PTR
 <+182>:	mov    $0x400d96,%esi           "Starting back up: "
 <+190>:	callq  0x4008c4 <log_wrapper>   log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
-
+```
+```
+    <+195>:	mov    $0x400da9,%edx
+    <+200>:	mov    -0xa0(%rbp),%rax
+    <+207>:	add    $0x8,%rax
+    <+211>:	mov    (%rax),%rax
+    <+214>:	mov    %rdx,%rsi
+    <+217>:	mov    %rax,%rdi
+    <+220>:	callq  0x4007c0 <fopen@plt>
+```
+```
 log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
 {
 
@@ -62,6 +72,4 @@ log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
     <+268>:	mov    $0x0,%eax
     <+273>:	callq  0x4007a0 <fprintf@plt>   fprintf( -0x118(%rbp) , "LOG: %s\n" ,  buffer1)
 }
-
-
 ```
