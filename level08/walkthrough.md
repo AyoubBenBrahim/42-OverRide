@@ -76,6 +76,10 @@
     <+419>:	mov    $0x0,%eax
     <+424>:	callq  0x4007b0 <open@plt>    fd = open(dest_file, 0x1b0, 0xc1)
     <+429>:	mov    %eax,-0x78(%rbp)       fd 
+    
+    
+     0x1b0 or 432 corresponds to the file mode 0o660 in octal notation,
+     which specifies that the file should be opened in read and write mode for the current user and group
 ```
 ```
     <+485>:	lea    -0x71(%rbp),%rcx      buf
@@ -97,15 +101,13 @@
 ```
 
 
-the program open the file "./backups/.log" for writing as well as argv1 for reading
+the program open the file "./backups/.log" for writing + argv1 for reading.
 
-append argv1 to "./backups/" and try to open it
+append/concat argv1 to "./backups/" then open it. (calls open to creat the backup file inside the folder ./backups/)
 
-the main() start copying character by character from the file that we want to backup argv1و to the backup file.
+start copying char by char from the file that we want to backup -argv1-, to the backup file.
 
 (write every character of argv1 to the new file)
-
-
 
 ```
 log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
@@ -164,6 +166,39 @@ level08@OverRide:/tmp$ cat backups/home/users/level09/.pass
 fjAwpJNs2vvkFLRebEvAQ2hFZ4uQBWfHRsP62d8S
 ```
 
+
+```
+i alerted open() ret so the prog may not exit
+
+   0x400ab3 <main+195>:	mov    $0x400da9,%edx
+=> 0x400ab8 <main+200>:	mov    -0xa0(%rbp),%rax
+   0x400acc <main+220>:	callq  0x4007c0 <fopen@plt>
+
+(gdb) i r $rax
+rax            0x7fffffffe678
+
+(gdb) p *(char **) 0x7fffffffe678
+$3 = 0x7fffffffe897 "/home/users/level08/level08"
+
+
+=> 0x400b73 <main+387>:	lea    -0x70(%rbp),%rax
+(gdb) i r $rax
+rax            0x7fffffffe520
+
+x/s 0x7fffffffe520
+0x7fffffffe520:	 "./backups/"
+
+    0x400b7d <main+397>:	callq  0x400750 <strncat@plt>  strncat("./backups/", "/home/users/level08/level08")
+=>  0x400b82 <main+402>:	lea    -0x70(%rbp),%rax
+   
+(gdb) i r $rax
+rax            0x7fffffffe520
+
+(gdb) x/s 0x7fffffffe520
+0x7fffffffe520:	 "./backups//home/users/level09/.pass"
+
+want just to see the behavior
+```
 
 
 
