@@ -51,7 +51,7 @@
     <+377>:	add    $0x8,%rax
     <+381>:	mov    (%rax),%rax
     <+384>:	mov    %rax,%rcx
-    <+387>:	lea    -0x70(%rbp),%rax         This variable will be used as the destination buffer for the strncat function
+    <+387>:	lea    -0x70(%rbp),%rax       This variable will be used as the destination buffer for the strncat function
     <+391>:	mov    %rcx,%rsi
     <+394>:	mov    %rax,%rdi
     <+397>:	callq  0x400750 <strncat@plt>   strncat(dest_file, argv1, len(argv[1]))
