@@ -1,6 +1,5 @@
 ```c
 void log_wrapper(FILE *log_PTR, char *log_msg, char *fileName) {
-    char current_char;
     size_t buff_len, fileName_length;
     ulong i, j;
     long saved_frame_pointer;
