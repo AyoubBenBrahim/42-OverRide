@@ -23,3 +23,13 @@ main()
     handle_msg();
 }
 ```
+
+```
+handle_msg()
+{
+    <+80>:	callq  0x9cd <set_username>
+    <+85>:	lea    -0xc0(%rbp),%rax
+    <+92>:	mov    %rax,%rdi
+    <+95>:	callq  0x932 <set_msg>
+}
+```
