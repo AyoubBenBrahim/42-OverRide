@@ -33,8 +33,9 @@ int main(int argc, char **argv)
   int   fd;
   char  c;
 
-  if (argc != 2)
-    printf("Usage: %s filename\n",*argv,*argv);
+   if (argc != 2) {
+    printf("Usage: %s filename\n", argv[0]);
+  }
 
   log_PTR = fopen("./backups/.log","w");
   if (log_PTR == NULL)
