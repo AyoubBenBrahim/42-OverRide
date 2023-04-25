@@ -185,7 +185,7 @@ so we will try to back-up the content of /home/users/level09/.pass to get the ne
 
 but since we do not have permission to create any file in backups/ we'll use /tmp
 
-or simply use an alias
+or simply use an alias, to avoid complex paths
 ```
 level08@OverRide:~$ chmod 777 .
 level08@OverRide:~$ ln -s /home/users/level09/.pass lvl9_pass
