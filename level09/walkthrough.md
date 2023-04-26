@@ -52,8 +52,22 @@ set_username()
 ```
 set_msg()
 {
-
+    <set_msg+92>:	lea    -0x400(%rbp),%rax
+    <set_msg+99>:	mov    $0x400,%esi
+    <set_msg+104>:	mov    %rax,%rdi
+    <set_msg+107>:	callq  0x555555554770 <fgets@plt>
+    
+    (gdb) x/s $rbp-0x400
+     0x7fffffffe0c0:	 'A' <repeats 21 times>, "\n"
+    
+    <set_msg+128>:	lea    -0x400(%rbp),%rcx                "message"    
+    <set_msg+135>:	mov    -0x408(%rbp),%rax                ""
+    <set_msg+142>:	mov    %rcx,%rsi
+    <set_msg+145>:	mov    %rax,%rdi
+    <set_msg+148>:	callq  0x555555554720 <strncpy@plt>     strncpy($rbp-0x400, )
 }
 ```
+
+secret_backdoor() isnt called anywhere, which has system
 
 
