@@ -68,5 +68,9 @@ set_msg()
 ```
 
 secret_backdoor() isnt called anywhere, which has system
-
+```
+SECURITY CONSIDERATIONS
+     The strcpy() function is easily misused in a manner which enables malicious users to arbitrarily
+     change a running program's functionality through a buffer overflow attack.
+``` 
 
