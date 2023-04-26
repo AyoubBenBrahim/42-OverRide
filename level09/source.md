@@ -14,6 +14,8 @@ void main(void)
 void handle_msg(void)
 {
   char* buffer[140];
+  
+  memset(buffer, 0, sizeof(buffer));
 
   set_username(&buffer);
   set_msg(&buffer);
