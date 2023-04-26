@@ -63,14 +63,58 @@ set_msg()
     <set_msg+135>:	mov    -0x408(%rbp),%rax                ""
     <set_msg+142>:	mov    %rcx,%rsi
     <set_msg+145>:	mov    %rax,%rdi
-    <set_msg+148>:	callq  0x555555554720 <strncpy@plt>     strncpy($rbp-0x400, )
+    <set_msg+148>:	call   <strncpy@plt>     strncpy($rbp-0x400, )
 }
 ```
 
-secret_backdoor() isnt called anywhere, which has system
+secret_backdoor() isnt called anywhere, which has system()
+
+```
+    <+33>:	call   <fgets@plt>                     ; fgets(input, 0x80, stdin)
+    <+38>:	lea    rax,[rbp-0x80]
+    <+42>:	mov    rdi,rax
+    <+45>:	call   <system@plt>                    ; system(input)
+```
+
 ```
 SECURITY CONSIDERATIONS
      The strcpy() function is easily misused in a manner which enables malicious users to arbitrarily
      change a running program's functionality through a buffer overflow attack.
 ``` 
+
+```
+=> 0x555555554910 <handle_msg+80>:	callq  0x5555555549cd <set_username>
+
+(gdb) info frame
+rip at 0x7fffffffe598
+
+>: Enter your username
+>>: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+(gdb) x/60wx $rsp
+
+0x7fffffffe558:	0xf7a9608f	0x41414141	0x41414141	0x41414141
+0x7fffffffe568:	0x41414141	0x41414141	0x41414141	0x41414141
+0x7fffffffe578:	0x41414141	0x41414141	0x41414141	0x00000041
+
+size of the buff 10 * 4 = 40
+
+```
+```
+>: Enter your username
+>>: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA        
+>: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>: Msg @Unix-Dude          ==> len = 41
+> msg:
+
+(gdb) x/s $rbp-0x400
+0x7fffffffe0c0:	 'B' <repeats 60 times>, "\n"
+
+(gdb) p/d 0x7fffffffe598 - 0x7fffffffe0c0
+$8 = 1240
+
+0x7fffffffe0c0:	0x42424242	0x42424242	0x42424242	0x42424242
+0x7fffffffe0d0:	0x42424242	0x42424242	0x42424242	0x42424242
+0x7fffffffe0e0:	0x42424242	0x42424242	0x42424242	0x42424242
+0x7fffffffe0f0:	0x42424242	0x42424242	0x42424242	0x0000000a
+```
 
