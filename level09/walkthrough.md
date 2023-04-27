@@ -139,7 +139,7 @@ so copy 41 bytes from the user input to some_struct->username
 ```
 >: Enter your username
 >>: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA        
->: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>:           ==> len = 41
+>: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>:           ==> takes only 41
 > msg:
 ```
 ************************-------------------********
