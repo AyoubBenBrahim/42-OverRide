@@ -97,7 +97,7 @@ rip at 0x7fffffffe598
 0x7fffffffe568:	0x41414141	0x41414141	0x41414141	0x41414141
 0x7fffffffe578:	0x41414141	0x41414141	0x41414141	0x00000041
 
-size of the buff 10 * 4 = 40
+size of the buff 10 * 4 + 1 = 41
 
 ```
 ```
