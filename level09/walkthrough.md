@@ -100,10 +100,11 @@ rip at 0x7fffffffe598
 size of the buff 10 * 4 + 1 = 41
 
 ```
+so copy 41 bytes from the user input to some_struct->username
 ```
 >: Enter your username
 >>: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA        
->: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>: Msg @Unix-Dude          ==> len = 41
+>: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>:           ==> len = 41
 > msg:
 
 (gdb) x/s $rbp-0x400
