@@ -25,6 +25,28 @@ https://www.fresh2refresh.com/c-programming/c-struct-memory-allocation/
 
 https://diveintosystems.org/book/C7-x86_64/structs.html
 
+identify a strcut in assembly
+```
+In assembly language, a "struct" is typically represented as a block of
+data with a fixed layout, where each field has a known offset from the
+beginning of the block.
+
+To detect if an assembly program uses a struct, you can look for code
+that accesses memory locations using specific offsets. For example,
+if you see code that loads or stores data at a specific offset relative to
+a base address, it may be accessing a struct.
+
+Another clue to look for is the use of instructions that calculate 
+addresses based on a base address and an offset. For example, the 
+"lea" (load effective address) instruction can be used to calculate the
+address of a field in a struct by adding the offset to the base address.
+
+Finally, you can look for code that uses the "mov" (move) instruction 
+to copy data from one memory location to another. If the source 
+and destination addresses are both relative to a base address and have
+offsets that correspond to the layout of a struct, it may be copying a struct.
+```
+
 ```
 main()
 {
