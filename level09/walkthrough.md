@@ -59,13 +59,27 @@ handle_msg()
 {
 // same buffer passed
 
-    <+70>:	lea    -0xc0(%rbp),%rax
-    <+80>:	call   <set_username>
-    <+85>:	lea    -0xc0(%rbp),%rax
-    <+95>:	call   <set_msg>
+    <+11>:	lea    -0xc0(%rbp),%rax     rbp-192     
+    <+18>:	add    $0x8c,%rax           140     
+    <+24>:	movq   $0x0,(%rax)          some_struct->message[140] = 0
+    <+31>:	movq   $0x0,0x8(%rax)
+    <+39>:	movq   $0x0,0x10(%rax)      rax+16 = 0
+    <+47>:	movq   $0x0,0x18(%rax)      rax+24 = 0
+    <+55>:	movq   $0x0,0x20(%rax)      rax+32 = 0
+    <+63>:	movl   $0x8c,-0xc(%rbp)     rbp-12 = 140
+    <+70>:	lea    -0xc0(%rbp),%rax     
+    <+80>:	callq   <set_username>      set_username(rbp-192)   set_username(&some_struct)
+    <+85>:	lea    -0xc0(%rbp),%rax     
+    <+95>:	callq   <set_msg>           set_msg(rbp-192)
 }
 ```
-
+```c
+typedef struct some_struct {
+  char message[140];
+  char user[40];              size could be deduced from "<set_username+157>:	cmpl   $0x28,-0x4(%rbp)", checks if 40 char was passed to the array   
+  size_t msg_len;
+} t_struct;
+```
 ```
 set_username()
 {
@@ -153,6 +167,10 @@ rip at 0x7fffffffe598
 
 p/d 0x7fffffffe598 - 0x7fffffffe4d0 = 200
 ```
+
+the offset is 200
+
+
 
 
 
