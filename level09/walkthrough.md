@@ -17,6 +17,14 @@ level09@OverRide:~$ ./level09
 0x00000000000009cd  set_username
 0x0000000000000aa8  main
 ```
+prerequisites:
+
+read on Struct Alignment on the stack
+
+https://www.fresh2refresh.com/c-programming/c-struct-memory-allocation/
+
+https://diveintosystems.org/book/C7-x86_64/structs.html
+
 ```
 main()
 {
