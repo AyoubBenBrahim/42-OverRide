@@ -76,7 +76,9 @@ handle_msg()
 ```c
 typedef struct some_struct {
   char message[140];
-  char user[40];              size could be deduced from "<set_username+157>:	cmpl   $0x28,-0x4(%rbp)", checks if 40 char was passed to the array   
+  char user[40];              size could be deduced from 
+                               "<set_username+157>:	cmpl   $0x28,-0x4(%rbp)", checks if 40 char was passed to the array   
+                               or using Ghidra/BinaryNinja
   size_t msg_len;
 } t_struct;
 ```
