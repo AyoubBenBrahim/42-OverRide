@@ -100,7 +100,8 @@ store_number(array[100])
   <store_number+72>:	mul    %edx   ==> eax = eax * edx
   <store_number+74>:	shr    %edx  right-shifting the value of edx by one     edx = edx >> 1
 
-If the division-by-3 check passed, check if the most significant byte of the first local variable is equal to 0xb7. If not, skip the following block.
+If the division-by-3 check passed, check if the most significant byte of the first local variable is equal to 0xb7. 
+If not, skip the following block.
 
 0x0804868a <+90>:    mov    -0x10(%ebp),%eax
 0x0804868d <+93>:    shr    $0x18,%eax
@@ -108,7 +109,8 @@ If the division-by-3 check passed, check if the most significant byte of the fir
 0x08048695 <+101>:   jne    0x80486c2 <store_number+146>
 
 
-If either of the checks failed, store the first local variable into an array pointed to by the first function argument, withan index specified by the second local variable. Set the return value to 0.
+If either of the checks failed, store the first local variable into an array pointed to by the first function argument,
+withan index specified by the second local variable. Set the return value to 0.
 
 0x080486c2 <+146>:   mov    -0xc(%ebp),%eax        index
 0x080486c5 <+149>:   shl    $0x2,%eax              index * 4
