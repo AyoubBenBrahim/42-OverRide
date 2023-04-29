@@ -1,5 +1,6 @@
 ```c
-void log_wrapper(FILE *log_PTR, char *log_msg, char *fileName) {
+void log_wrapper(FILE *log_PTR, char *log_msg, char *fileName) 
+{
     size_t buff_len, fileName_length;
     ulong i, j;
     long saved_frame_pointer;
@@ -32,7 +33,8 @@ int main(int argc, char **argv)
   int   fd;
   char  c;
 
-   if (argc != 2) {
+  if (argc != 2) 
+  {
     printf("Usage: %s filename\n", argv[0]);
   }
 
@@ -54,7 +56,8 @@ int main(int argc, char **argv)
 
   strncat(file, argv[1], strlen(argv[1]));
   fd = open(file, 0xc1, 0x1b0);
-  if (fd < 0) {
+  if (fd < 0) 
+  {
     printf("ERROR: Failed to open %s%s\n", "./backups/", argv[1]);
     exit(1);
   }
