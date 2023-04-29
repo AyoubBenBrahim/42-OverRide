@@ -42,7 +42,7 @@ int main(int argc, char ** argv, char **env)
 {
 	
 	int database[100] = {0};
-  char command[20] = {0};
+  	char command[20] = {0};
 	int ret = 0;
 	char **ptr;
 
@@ -50,10 +50,10 @@ int main(int argc, char ** argv, char **env)
 	while (*ptr)
 	{
 		memset(*ptr, 0, strlen(*ptr));
-	  ptr++;
+	  	ptr++;
 	}
   
-  ptr = env;
+  	ptr = env;
 	while (*ptr)
 	{
 		memset(*ptr, 0, strlen(*ptr));
