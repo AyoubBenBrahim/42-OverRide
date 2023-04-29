@@ -11,31 +11,36 @@ int auth(char *login,int serial)
   login_len = strcspn(login,"\n");
   login[login_len] = '\0';
   login_len = strnlen(login,0x20);
-  if ((int)login_len < 6) {
+  if ((int)login_len < 6) 
+  {
     ret = 1;
   }
-  else {
+  else 
+  {
     lVar1 = ptrace(PTRACE_TRACEME);
-    if (lVar1 == -1) {
+    if (lVar1 == -1) 
+    {
       puts("\x1b[32m.---------------------------.");
       puts("\x1b[31m| !! TAMPERING DETECTED !!  |");
       puts("\x1b[32m\'---------------------------\'");
       ret = 1;
     }
-    else {
+    else 
+    {
       hash = ((int)login[3] ^ 0x1337U) + 0x5eeded;
-      for (i = 0; i < (int)login_len; i = i + 1) {
-        if (login[i] < ' ') {
+      for (i = 0; i < (int)login_len; i = i + 1) 
+      {
+        if (login[i] < ' ') 
+	{
           return 1;
         }
         hash = hash + ((int)login[i] ^ hash) % 0x539;
       }
-      if (serial == hash) {
+      if (serial == hash)
         ret = 0;
-      }
-      else {
+      else
         ret = 1;
-      }
+      
     }
   }
   return ret;
