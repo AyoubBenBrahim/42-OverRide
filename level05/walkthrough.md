@@ -131,6 +131,8 @@ so it prevents us from executing any shellcode that contains bytes which values 
 we ll inject it in the env
 
 ```
+get it while runtime
+
 (gdb) p (char *)(getenv("shellcode"))
 $5 = 0xffffddd6 
 ```
