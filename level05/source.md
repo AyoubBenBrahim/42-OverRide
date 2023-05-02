@@ -1,4 +1,4 @@
-
+```c
 int main() {
 	int i = 0;
 	buffer1[100];
@@ -17,3 +17,4 @@ int main() {
 	printf(buffer1);
 	exit(0);
 }
+```
