@@ -77,6 +77,20 @@ ecx            0x15	21
 (gdb) i r  $eax
 eax            0x15	21
  ```
+ we can brute force the flag from here without proceeding to the next 
+ 
+ ```
+ p/d 0x1337d00d - 0x15
+$1 = 322424824
+(gdb) p/d 0x1337d00d - 0
+$2 = 322424845
+ ```
+
+`for nb in {322424824..322424845}; do (python -c "print $nb" ; cat) | ./level03 ; done`
+ 
+ 
+ if we want to continue
+ 
  
 call decrypt(result=ebp+8)
 {
