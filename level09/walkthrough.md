@@ -146,10 +146,43 @@ so copy 41 bytes from the user input to some_struct->username
 ```
 >: Enter your username
 >>: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA        
->: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>:           ==> takes only 41
+>: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>:           ==> takes 41
 > msg:
 ```
-************************-------------------********
+********-------------------********
+
+some further debug for more illustration
+
+buffer addr: `<handle_msg+70>:	lea    -0xc0(%rbp),%rax`
+
+```
+(gdb) x/60wx $rbp-0xc0
+0x7fffffffe4d0:	0x42424242	0x42424242	0x42424242	0x42424242
+0x7fffffffe4e0:	0x42424242	0x42424242	0x42424242	0x42424242
+0x7fffffffe4f0:	0x42424242	0x42424242	0x0000000a	0x00000000
+0x7fffffffe500:	0x00000000	0x00000000	0x00000000	0x00000000
+0x7fffffffe510:	0x00000000	0x00000000	0x00000000	0x00000000
+0x7fffffffe520:	0x00000000	0x00000000	0x00000000	0x00000000
+0x7fffffffe530:	0x00000000	0x00000000	0x00000000	0x00000000
+0x7fffffffe540:	0x00000000	0x00000000	0x00000000	0x00000000
+0x7fffffffe550:	0x00000000	0x00000000	0x00000000	0x41414141
+0x7fffffffe560:	0x41414141	0x41414141	0x0000000a	0x00000000
+0x7fffffffe570:	0x00000000	0x00000000	0x00000000	0x00000000
+0x7fffffffe580:	0x00000000	0x0000008c	0xffffe5a0	0x00007fff
+```
+
+set_username() buffer ==> A's ==> 0x7fffffffe584 - 0x7fffffffe55c     = strlen(username) = 40
+
+set_msg() buffer      ==> B's ==> p/x 0x7fffffffe55c - 0x7fffffffe4d0 = strlen(message) = 0x8c / 140
+
+so 41 A's will overwrite the message len
+
+===================
+
+find the func EIP
+
+===================
+
 ```
 (gdb) info breakpoints
 1       breakpoint     keep y   0x00000000000008c0 <handle_msg>
