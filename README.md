@@ -3,7 +3,7 @@
 
 This project follows the [RainFall](https://github.com/AyoubBenBrahim/42-rainfall) project. 
 
-The goal of your program is to exploit ten different bynaries using more or less complicated methods and further your knowledge in i386 systems.
+The goal of your program is to exploit ten different binaries using more or less complicated methods and further your knowledge in i386 systems.
 
 For more details, look at the subject of this project.
 
